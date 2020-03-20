@@ -12,8 +12,7 @@ public class Main{
 
 	public static void main(String[] args) {
 		try {
-
-
+			
 			new TelaPrincipal();
 
 		} catch (Exception e) {
@@ -60,10 +59,11 @@ class TelaPrincipal extends JFrame{
 		JPanel p = new JPanel(); 
 		box = Box.createVerticalBox();
 		// add buttons and textfield to panel 
+		box.add(l); 
 		box.add(btCad); 
 		box.add(btLan); 
 		box.add(btRel); 
-		box.add(l); 
+		
 
 		p.add(box);
 
