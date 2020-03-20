@@ -13,7 +13,7 @@ public class Main{
 	public static void main(String[] args) {
 		try {
 
-			
+
 			new TelaPrincipal();
 
 		} catch (Exception e) {
@@ -74,7 +74,9 @@ class TelaPrincipal extends JFrame{
 		f.setSize(300, 300); 
 
 		f.show();
-	}//home screen
 
-	
+	}
+}//home screen
+
+
 
