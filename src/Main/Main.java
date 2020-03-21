@@ -12,7 +12,7 @@ public class Main{
 
 	public static void main(String[] args) {
 		try {
-			
+
 			new TelaPrincipal();
 
 		} catch (Exception e) {
@@ -39,7 +39,7 @@ class TelaPrincipal extends JFrame{
 		f = new JFrame("Nondas Celulares"); 
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// create a label to display text 
-		l = new JLabel("Selecione a opção desejada"); 
+		l = new JLabel("Selecione a opção desejada:"); 
 
 		// create a new buttons 
 		btCad = new JButton("Cadastros"); 
@@ -63,7 +63,7 @@ class TelaPrincipal extends JFrame{
 		box.add(btCad); 
 		box.add(btLan); 
 		box.add(btRel); 
-		
+
 
 		p.add(box);
 
