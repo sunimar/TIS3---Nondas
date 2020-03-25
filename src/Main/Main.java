@@ -6,6 +6,7 @@ import java.awt.event.*;
 import java.awt.*; 
 import javax.swing.*;
 import javax.swing.JOptionPane;
+import Telas.TelaCadastros;
 
 public class Main{
 
@@ -47,10 +48,10 @@ class TelaPrincipal extends JFrame{
 		btRel = new JButton("Relatórios"); 
 
 		btCad.addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//new TelaCadastros();
+				new TelaCadastros();
 
 			}
 		});
