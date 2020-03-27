@@ -172,10 +172,10 @@ public class TelaCliente extends JFrame{
 
 		Cliente cli = new Cliente();
 		cli.setNome(nome);
-		//cli.setCpf(Integer.parseInt(cpf));
+		cli.setCpf(Float.parseFloat(cpf));
 		cli.setEmail(email);
-		
-		cli.print();
+	
+		//cli.print();
 		
 		JOptionPane.showMessageDialog(null, nome + " inserido com sucesso!");
 	}//create

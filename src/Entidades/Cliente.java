@@ -3,7 +3,7 @@ package Entidades;
 public class Cliente {
 	private int codCli;
 	private String nome;
-	private int cpf;
+	private float cpf;
 	private String email;
 
 	public Cliente() {}
@@ -16,11 +16,11 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public int getCpf() {
+	public float getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(int cpf) {
+	public void setCpf(float cpf) {
 		this.cpf = cpf;
 	}
 
@@ -41,7 +41,7 @@ public class Cliente {
 	}
 
 	public void print() {
-		System.out.println("Nome: "+ this.nome + "CPF: " + this.cpf + "Email: " + this.email);
+		System.out.println(" Nome: "+ this.nome + " CPF: " + this.cpf + " Email: " + this.email);
 	}
 
 }

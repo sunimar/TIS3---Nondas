@@ -49,19 +49,20 @@ class TelaPrincipal extends JFrame{
 		btSai = new JButton("Sair");
 
 		btCad.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new TelaCadastros();
 
 			}
 		});
-		
+
 		btSai.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				f.dispose();
+				System.exit(0);
 
 			}
 		});
