@@ -25,7 +25,6 @@ public class TelaCadastros {
 	public TelaCadastros() {
 		// create a new frame with text field and button 
 		f = new JFrame("Cadastros"); 
-		//f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// create a label to display text 
 		l = new JLabel("Selecione a opção desejada:"); 
 
@@ -39,7 +38,16 @@ public class TelaCadastros {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//new TelaCliente();
+				new TelaCliente();
+
+			}
+		});
+		
+		btCli.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//new TelaProduto();
 
 			}
 		});

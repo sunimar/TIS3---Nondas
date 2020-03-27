@@ -28,7 +28,7 @@ class TelaPrincipal extends JFrame{
 	static JFrame f; 
 
 	// JButton 
-	static JButton btCad, btLan, btRel; 
+	static JButton btCad, btLan, btRel, btSai; 
 
 	// label to display text 
 	static JLabel l; 
@@ -46,12 +46,22 @@ class TelaPrincipal extends JFrame{
 		btCad = new JButton("Cadastros"); 
 		btLan = new JButton("Lançamentos"); 
 		btRel = new JButton("Relatórios"); 
+		btSai = new JButton("Sair");
 
 		btCad.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new TelaCadastros();
+
+			}
+		});
+		
+		btSai.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				f.dispose();
 
 			}
 		});
@@ -64,6 +74,7 @@ class TelaPrincipal extends JFrame{
 		box.add(btCad); 
 		box.add(btLan); 
 		box.add(btRel); 
+		box.add(btSai);
 
 
 		p.add(box);

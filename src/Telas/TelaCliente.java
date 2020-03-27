@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,10 +16,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import Main.Aluno;
-import Main.AlunoDAO;
+import Entidades.Cliente;
 
-public class TelaCliente {
+public class TelaCliente extends JFrame{
+	static JFrame f;
 	JPanel jp;
 	Box hb, vb;
 
@@ -26,27 +27,34 @@ public class TelaCliente {
 	JLabel[] lbFields;
 	JTextField[] tfFields;
 
-	JButton btCreate, btRetrieve, btUpdate, btDelete, btShow;
-	AlunoDAO adao = new AlunoDAO();
+	JButton btCreate, btRetrieve, btUpdate, btDelete, btShow, btVol;
 
 	int lastSelected = -1;
 
-	TelaAluno()
-	{
-		super("Aluno");
-
+	public TelaCliente(){
+		f = new JFrame("Cliente"); 
 		jp = new JPanel();
 		hb = Box.createHorizontalBox();
 		vb = Box.createVerticalBox();
-		btCreate   = new JButton("Add Aluno");
-		btRetrieve = new JButton("Get Aluno");
-		btUpdate   = new JButton("Upd Aluno");
-		btDelete   = new JButton("Del Aluno");
-		btShow     = new JButton("Sho Aluno");
+		btCreate   = new JButton("Criar");
+		btRetrieve = new JButton("Recuperar");
+		btUpdate   = new JButton("Atualizar");
+		btDelete   = new JButton("Deletar");
+		btShow     = new JButton("Mostar Tudo");
+		btVol 	   = new JButton("Voltar");
+		
+		btVol.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//this.dispose();
+
+			}
+		});
 
 		btCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btCreateAluno();
+				btCreate();
 			}
 		});
 
@@ -85,9 +93,12 @@ public class TelaCliente {
 		hb.add(btUpdate);
 		hb.add(btDelete);
 		hb.add(btShow);
+		hb.add(btVol);
 		vb.add(hb);
 		jp.add(vb);
-
+		f.add(jp);
+		
+		
 		lbFields[0] = new JLabel("ID: ");
 		tfFields[0] = new JTextField(10);
 		tfFields[0].setEditable(false);
@@ -96,43 +107,29 @@ public class TelaCliente {
 		hbFields[0].add(tfFields[0]);
 		vb.add(hbFields[0]);
 
-		lbFields[1] = new JLabel("Matricula: ");
+		lbFields[1] = new JLabel("Nome: ");
 		tfFields[1] = new JTextField(10);
 		hbFields[1] = Box.createHorizontalBox();
 		hbFields[1].add(lbFields[1]);
 		hbFields[1].add(tfFields[1]);
 		vb.add(hbFields[1]);
 
-		lbFields[2] = new JLabel("Nome: ");
+		lbFields[2] = new JLabel("CPF: ");
 		tfFields[2] = new JTextField(10);
 		hbFields[2] = Box.createHorizontalBox();
 		hbFields[2].add(lbFields[2]);
 		hbFields[2].add(tfFields[2]);
 		vb.add(hbFields[2]);
 
-		lbFields[3] = new JLabel("Disciplina: ");
+		lbFields[3] = new JLabel("Email: ");
 		tfFields[3] = new JTextField(10);
 		hbFields[3] = Box.createHorizontalBox();
 		hbFields[3].add(lbFields[3]);
 		hbFields[3].add(tfFields[3]);
 		vb.add(hbFields[3]);
 
-		lbFields[4] = new JLabel("Media Disciplina: ");
-		tfFields[4] = new JTextField(10);
-		hbFields[4] = Box.createHorizontalBox();
-		hbFields[4].add(lbFields[4]);
-		hbFields[4].add(tfFields[4]);
-		vb.add(hbFields[4]);
-
-		lbFields[5] = new JLabel("Status: ");
-		tfFields[5] = new JTextField(10);
-		hbFields[5] = Box.createHorizontalBox();
-		hbFields[5].add(lbFields[5]);
-		hbFields[5].add(tfFields[5]);
-		vb.add(hbFields[5]);
-
 		add(jp);
-
+		
 		setSize(600,400);
 		show();
 	}
@@ -161,26 +158,27 @@ public class TelaCliente {
 	}
 
 
-	public void btCreateAluno()
-	{
-		String matricula = tfFields[1].getText();
-		String nome = tfFields[2].getText();
-		String disciplina = tfFields[3].getText();
-		String media = tfFields[4].getText();
+	public void btCreate(){
+		
+		String nome = tfFields[1].getText();
+		String cpf = tfFields[2].getText();
+		String email = tfFields[3].getText();
 
-		if (   matricula.equals("") || nome.equals("")
-				|| disciplina.equals("") || media.equals(""))
-		{
+		if (nome.equals("") || cpf.equals("") || cpf.length()>11 || cpf.length()<11 || cpf.equals("00000000000")
+				|| email.equals("")){
 			JOptionPane.showMessageDialog(null, "Os campos: matricula, nome, disciplina e media devem ser preenchidos!");
 			return;
 		}
 
-		Aluno aluno = new Aluno(Integer.parseInt(matricula), nome, disciplina, Double.parseDouble(media), false);
-		aluno.setStatusDisciplina( aluno.getStatusDisciplina() );
-		adao.add(aluno);
-
+		Cliente cli = new Cliente();
+		cli.setNome(nome);
+		//cli.setCpf(Integer.parseInt(cpf));
+		cli.setEmail(email);
+		
+		cli.print();
+		
 		JOptionPane.showMessageDialog(null, nome + " inserido com sucesso!");
-	}
+	}//create
 
 	public void btRetrieveAluno()
 	{

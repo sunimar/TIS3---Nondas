@@ -40,5 +40,8 @@ public class Cliente {
 		this.codCli = codCli;
 	}
 
+	public void print() {
+		System.out.println("Nome: "+ this.nome + "CPF: " + this.cpf + "Email: " + this.email);
+	}
 
 }
