@@ -43,11 +43,11 @@ public class TelaCadastros {
 			}
 		});
 		
-		btCli.addActionListener(new ActionListener() {
+		btProd.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//new TelaProduto();
+				new TelaProduto();
 
 			}
 		});

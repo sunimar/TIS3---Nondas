@@ -1,35 +1,59 @@
 package Entidades;
 
-public class Produto {
-	private int codProd;
-	private double precoCusto;
-	private double precovenda;
 
-	public Produto() {}
+public class Produto{
+	private int id;
+	private String nome;
+	private float precoCompra;
+	private float precoVenda;
 
-	public int getCodProd() {
-		return codProd;
+	public Produto(String nome, float precoCompra, float precoVenda) throws ExcecaoValorInvalido {
+		this.setNome(nome);
+		this.setPrecoCompra(precoCompra);
+		this.setPrecoVenda(precoVenda);
 	}
 
-	public void setCodProd(int codProd) {
-		this.codProd = codProd;
+	public Produto(){}
+
+	public String getNome() {
+		return nome;
 	}
 
-	public double getPrecoCusto() {
-		return precoCusto;
+	public float getPrecoCompra() {
+		return precoCompra;
 	}
 
-	public void setPrecoCusto(double precoCusto) {
-		this.precoCusto = precoCusto;
+	public float getPrecoVenda() {
+		return precoVenda;
 	}
 
-	public double getPrecovenda() {
-		return precovenda;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public void setPrecovenda(double precovenda) {
-		this.precovenda = precovenda;
+	public void setPrecoCompra(float precoCompra)throws ExcecaoValorInvalido{
+
+		if (precoCompra > 0) {
+			this.precoCompra = precoCompra;
+		}else {
+			throw new ExcecaoValorInvalido(precoCompra + "Digite um valor valido!");
+		}
 	}
 
+	public void setPrecoVenda(float precoVenda) throws ExcecaoValorInvalido {
+		if (precoVenda > 0) {
+			this.precoVenda = precoVenda;
+		}else {
+			throw new ExcecaoValorInvalido(precoCompra + "Digite um valor valido!");
+		}
+	}
 
-}
+	@Override
+	public String toString() {
+		return "Nome do Produto: " + nome + "\nPreco de Compra: " + precoCompra + "\nPreco de Venda: " + precoVenda;
+	}
+
+	public void print() {
+		System.out.println(this.nome + this.precoCompra + this.precoVenda);
+	}
+}//class
