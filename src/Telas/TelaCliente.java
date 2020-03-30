@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import Control.ClienteControl;
 import Entidades.Cliente;
 
 public class TelaCliente extends JFrame{
@@ -174,6 +175,9 @@ public class TelaCliente extends JFrame{
 		cli.setCpf(Float.parseFloat(cpf));
 		cli.setEmail(email);
 	
+		ClienteControl cliCon = new ClienteControl();
+		cliCon.inserirCliente(cli);
+		
 		//cli.print();
 		
 		JOptionPane.showMessageDialog(null, nome + " inserido com sucesso!");

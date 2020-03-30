@@ -52,6 +52,15 @@ public class TelaCadastros {
 			}
 		});
 		
+		btServ.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new TelaServico();
+
+			}
+		});
+		
 		btVol.addActionListener(new ActionListener() {
 
 			@Override

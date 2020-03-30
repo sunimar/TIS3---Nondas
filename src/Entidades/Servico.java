@@ -32,5 +32,9 @@ public class Servico {
 		this.precoServ = precoServ;
 	}
 
-
+	public void print() {
+		System.out.println(this.nomeServ + this.precoServ);
+	}
+	
+	
 }
