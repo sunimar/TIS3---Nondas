@@ -13,21 +13,16 @@ import Entidades.Cliente;
 
 public class CadastroClienteDAO implements DAO<Cliente, Integer> {
 
-	private List<Cliente> clientes;
-	private File file;
+	private static List<Cliente> clientes = new ArrayList<Cliente>();;
+	private static File file = new File("clientes.txt");
 	private FileOutputStream fos;
 	private ObjectOutputStream outputFile;
 
-	public CadastroClienteDAO(String filename) throws IOException {
-		clientes = new ArrayList<Cliente>();
-		file = new File(filename);
-		if (file.exists())
-			readFromFile();
-	}
+	public CadastroClienteDAO() throws IOException {	}
 
 	@Override
-	public void add(Cliente cooperativa) {
-		clientes.add(cooperativa);
+	public void add(Cliente cli) {
+		clientes.add(cli);
 		saveToFile();
 	}
 
@@ -44,7 +39,6 @@ public class CadastroClienteDAO implements DAO<Cliente, Integer> {
 
 	@Override
 	public List<Cliente> getAll() {
-
 		return clientes;
 	}
 
@@ -64,7 +58,6 @@ public class CadastroClienteDAO implements DAO<Cliente, Integer> {
 			clientes.remove(index);
 		}
 		saveToFile();
-
 	}
 
 	private void readFromFile() {

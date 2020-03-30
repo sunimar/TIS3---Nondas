@@ -15,7 +15,7 @@ public class Cliente implements Serializable {
 
 	public Cliente(){}
 
-	public Cliente(long cpfCnpj, String nome, String email, String telefone) {
+	public Cliente(float cpfCnpj, String nome, String email, String telefone) {
 
 		setCpfCnpj(cpfCnpj);
 		setNome(nome);

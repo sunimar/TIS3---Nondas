@@ -3,6 +3,7 @@ package Telas;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import Entidades.Cliente;
+import DAO.CadastroClienteDAO;
 
 public class TelaCliente extends JFrame{
 	static JFrame f;
@@ -165,7 +167,7 @@ public class TelaCliente extends JFrame{
 	}
 
 
-	public void btCreate(){
+	public void btCreate() throws IOException{
 		
 		String nome = tfFields[1].getText();
 		String cpf = tfFields[2].getText();
@@ -183,11 +185,11 @@ public class TelaCliente extends JFrame{
 		cli.setCpfCnpj(Float.parseFloat(cpf));
 		cli.setEmail(email);
 		cli.setTelefone(tel);
-	
-		
-		
 		cli.print();
-		
+		/*
+		CadastroClienteDAO cliDAO = new CadastroClienteDAO();
+		cliDAO.add(cli);
+		*/
 		JOptionPane.showMessageDialog(null, nome + " inserido com sucesso!");
 	}//create
 
