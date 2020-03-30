@@ -173,11 +173,11 @@ public class TelaServico extends JFrame{
 			return;
 		}
 
-		Servico serv = new Servico();
-		serv.setNomeServ(nome);
-		serv.setPrecoServ(Float.parseFloat(preco));
+		/*
+		 * Entra aqui a classe ordem de servico
+		 * */
 
-		serv.print();
+		
 
 		JOptionPane.showMessageDialog(null, nome + " inserido com sucesso!");
 	}//create

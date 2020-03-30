@@ -56,7 +56,7 @@ public class TelaCadastros {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new TelaServico();
+				//new TelaServico();
 
 			}
 		});

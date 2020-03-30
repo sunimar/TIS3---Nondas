@@ -60,7 +60,7 @@ public class TelaCliente extends JFrame{
 
 		btRetrieve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btRetrieveAluno();
+				btRetrieve();
 			}
 		});
 
@@ -114,7 +114,7 @@ public class TelaCliente extends JFrame{
 		hbFields[1].add(tfFields[1]);
 		vb.add(hbFields[1]);
 
-		lbFields[2] = new JLabel("CPF: ");
+		lbFields[2] = new JLabel("CPF/CNPJ: ");
 		tfFields[2] = new JTextField(10);
 		hbFields[2] = Box.createHorizontalBox();
 		hbFields[2].add(lbFields[2]);
@@ -127,6 +127,14 @@ public class TelaCliente extends JFrame{
 		hbFields[3].add(lbFields[3]);
 		hbFields[3].add(tfFields[3]);
 		vb.add(hbFields[3]);
+		
+		lbFields[4] = new JLabel("Telefone: ");
+		tfFields[4] = new JTextField(10);
+		hbFields[4] = Box.createHorizontalBox();
+		hbFields[4].add(lbFields[4]);
+		hbFields[4].add(tfFields[4]);
+		vb.add(hbFields[4]);
+
 
 		add(jp);
 		
@@ -163,31 +171,33 @@ public class TelaCliente extends JFrame{
 		String nome = tfFields[1].getText();
 		String cpf = tfFields[2].getText();
 		String email = tfFields[3].getText();
+		String tel = tfFields[4].getText();
 
 		if (nome.equals("") || cpf.equals("") || cpf.length()>11 || cpf.length()<11 || cpf.equals("00000000000")
-				|| email.equals("")){
-			JOptionPane.showMessageDialog(null, "Os campos: matricula, nome, disciplina e media devem ser preenchidos!");
+				|| email.equals("") || tel.equals("")){
+			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos!");
 			return;
 		}
 
 		Cliente cli = new Cliente();
 		cli.setNome(nome);
-		cli.setCpf(Float.parseFloat(cpf));
+		cli.setCpfCnpj(Float.parseFloat(cpf));
 		cli.setEmail(email);
+		cli.setTelefone(tel);
 	
 		ClienteControl cliCon = new ClienteControl();
-		cliCon.inserirCliente(cli);
+		//cliCon.inserirCliente(cli);
 		
-		//cli.print();
+		cli.print();
 		
 		JOptionPane.showMessageDialog(null, nome + " inserido com sucesso!");
 	}//create
 
-	public void btRetrieveAluno()
+	public void btRetrieve()
 	{
 		String id = "";
 		while (id.equals(""))
-			id = JOptionPane.showInputDialog("Digite o ID do aluno");
+			id = JOptionPane.showInputDialog("Digite o ID do cliente");
 
 		Aluno aluno = adao.get(Integer.parseInt(id));
 		tfFields[0].setText( (lastSelected = aluno.getId()) + "");

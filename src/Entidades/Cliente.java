@@ -1,12 +1,29 @@
 package Entidades;
 
-public class Cliente {
-	private int codCli;
-	private String nome;
-	private float cpf;
-	private String email;
+import java.io.Serializable;
+import java.util.Random;
 
-	public Cliente() {}
+public class Cliente implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	//private int codCli;
+	private String nome;
+	private float cpfCnpj;
+	private String email;
+	private String telefone;
+	Random random = new Random();
+
+	public Cliente(){}
+
+	public Cliente(long cpfCnpj, String nome, String email, String telefone) {
+
+		setCpfCnpj(cpfCnpj);
+		setNome(nome);
+		setEmail(email);
+		setTelefone(telefone);
+		//setCodCli();
+
+	}
 
 	public String getNome() {
 		return nome;
@@ -16,12 +33,12 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public float getCpf() {
-		return cpf;
+	public float getCpfCnpj() {
+		return cpfCnpj;
 	}
 
-	public void setCpf(float cpf) {
-		this.cpf = cpf;
+	public void setCpfCnpj(float f) {
+		this.cpfCnpj = f;
 	}
 
 	public String getEmail() {
@@ -32,16 +49,27 @@ public class Cliente {
 		this.email = email;
 	}
 
+	/*
 	public int getCodCli() {
 		return codCli;
 	}
 
-	public void setCodCli(int codCli) {
-		this.codCli = codCli;
+	public void setCodCli() {
+		this.codCli = random.nextInt(1000);
+	}
+	 */
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public void print() {
-		System.out.println(" Nome: "+ this.nome + " CPF: " + this.cpf + " Email: " + this.email);
+		System.out.println(this.nome + this.cpfCnpj + this.email + this.telefone);
 	}
 
-}
+
+}//class cliente

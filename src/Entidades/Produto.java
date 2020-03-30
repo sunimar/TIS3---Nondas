@@ -4,11 +4,13 @@ package Entidades;
 public class Produto{
 	private int id;
 	private String nome;
+	private String descricao;
 	private float precoCompra;
 	private float precoVenda;
 
 	public Produto(String nome, float precoCompra, float precoVenda) throws ExcecaoValorInvalido {
 		this.setNome(nome);
+		this.setDescricao(descricao);
 		this.setPrecoCompra(precoCompra);
 		this.setPrecoVenda(precoVenda);
 	}
@@ -29,6 +31,10 @@ public class Produto{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public void setPrecoCompra(float precoCompra)throws ExcecaoValorInvalido{
