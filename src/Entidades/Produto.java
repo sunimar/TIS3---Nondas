@@ -1,16 +1,17 @@
 package Entidades;
 
+import java.util.Random;
 
 public class Produto{
 	private int id;
 	private String nome;
-	private String descricao;
 	private float precoCompra;
 	private float precoVenda;
+	private int idProduto;
+	private Random random = new Random(); 
 
 	public Produto(String nome, float precoCompra, float precoVenda) throws ExcecaoValorInvalido {
 		this.setNome(nome);
-		this.setDescricao(descricao);
 		this.setPrecoCompra(precoCompra);
 		this.setPrecoVenda(precoVenda);
 	}
@@ -19,6 +20,14 @@ public class Produto{
 
 	public String getNome() {
 		return nome;
+	}
+
+	public int getIdProduto() {
+		return idProduto;
+	}
+
+	public void setIdProduto() {
+		this.idProduto = random.nextInt(10000);
 	}
 
 	public float getPrecoCompra() {
@@ -31,10 +40,6 @@ public class Produto{
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 
 	public void setPrecoCompra(float precoCompra)throws ExcecaoValorInvalido{

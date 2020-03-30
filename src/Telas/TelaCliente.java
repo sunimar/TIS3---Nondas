@@ -15,7 +15,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import Control.ClienteControl;
 import Entidades.Cliente;
 
 public class TelaCliente extends JFrame{
@@ -185,8 +184,7 @@ public class TelaCliente extends JFrame{
 		cli.setEmail(email);
 		cli.setTelefone(tel);
 	
-		ClienteControl cliCon = new ClienteControl();
-		//cliCon.inserirCliente(cli);
+		
 		
 		cli.print();
 		
