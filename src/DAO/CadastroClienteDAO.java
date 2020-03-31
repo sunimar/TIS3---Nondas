@@ -11,7 +11,7 @@ import java.util.List;
 
 import Entidades.Cliente;
 
-public class CadastroClienteDAO implements DAO<Cliente, Integer> {
+public class CadastroClienteDAO implements DAO<Cliente, Long> {
 
 	private List<Cliente> clientes;
 	private File file;
@@ -26,13 +26,23 @@ public class CadastroClienteDAO implements DAO<Cliente, Integer> {
 	}
 
 	@Override
-	public void add(Cliente cooperativa) {
-		clientes.add(cooperativa);
+	public void add(Cliente cli) throws ExcecaoValorDuplicado{
+		
+		for (Cliente busca : clientes) {
+			if (cli.getCpfCnpj() == busca.getCpfCnpj()) {
+				throw new ExcecaoValorDuplicado("O CpfCnpj: ", cli.getCpfCnpj());
+			}
+			
+			}
+		clientes.add(cli);
 		saveToFile();
+		
+		
+		
 	}
 
 	@Override
-	public Cliente get(Integer chave) {
+	public Cliente get(Long chave) {
 		for (Cliente cli : clientes) {
 			if (chave.longValue() == cli.getCpfCnpj()) {
 				return cli;

@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import DAO.CadastroClienteDAO;
+import DAO.ExcecaoValorDuplicado;
 import Entidades.Cliente;
 
 public class TelaCliente extends JFrame{
@@ -43,12 +44,12 @@ public class TelaCliente extends JFrame{
 		btDelete   = new JButton("Deletar");
 		btShow     = new JButton("Mostar Tudo");
 		btVol 	   = new JButton("Voltar");
-		
+
 		btVol.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				//this.dispose();
 			}
 		});
@@ -60,33 +61,44 @@ public class TelaCliente extends JFrame{
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				} catch (ExcecaoValorDuplicado e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
 
 		btRetrieve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btRetrieve();
+				try {
+					btRetrieve();
+				}catch(Exception e1) {e1.printStackTrace();}
 			}
 		});
 
 		btUpdate.setEnabled(false);
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btUpdateAluno();
+				try {
+					btUpdate();
+				}catch(Exception e1) {e1.printStackTrace();}
 			}
 		});
 
 		btDelete.setEnabled(false);
 		btDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btDeleteAluno();
+				try {
+					btDelete();
+				}catch(Exception e1) {e1.printStackTrace();}
 			}
 		});
 
 		btShow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btShowAlunos();
+				try {
+					btShow();
+				}catch(Exception e1) {e1.printStackTrace();}
 			}
 		});
 
@@ -103,11 +115,9 @@ public class TelaCliente extends JFrame{
 		vb.add(hb);
 		jp.add(vb);
 		f.add(jp);
-		
-		
-		lbFields[0] = new JLabel("ID: ");
+
+		lbFields[0] = new JLabel("CPF/CNPJ: ");
 		tfFields[0] = new JTextField(10);
-		tfFields[0].setEditable(false);
 		hbFields[0] = Box.createHorizontalBox();
 		hbFields[0].add(lbFields[0]);
 		hbFields[0].add(tfFields[0]);
@@ -120,35 +130,30 @@ public class TelaCliente extends JFrame{
 		hbFields[1].add(tfFields[1]);
 		vb.add(hbFields[1]);
 
-		lbFields[2] = new JLabel("CPF/CNPJ: ");
+		lbFields[2] = new JLabel("Email: ");
 		tfFields[2] = new JTextField(10);
 		hbFields[2] = Box.createHorizontalBox();
 		hbFields[2].add(lbFields[2]);
 		hbFields[2].add(tfFields[2]);
 		vb.add(hbFields[2]);
 
-		lbFields[3] = new JLabel("Email: ");
+		lbFields[3] = new JLabel("Telefone: ");
 		tfFields[3] = new JTextField(10);
 		hbFields[3] = Box.createHorizontalBox();
 		hbFields[3].add(lbFields[3]);
 		hbFields[3].add(tfFields[3]);
 		vb.add(hbFields[3]);
-		
-		lbFields[4] = new JLabel("Telefone: ");
-		tfFields[4] = new JTextField(10);
-		hbFields[4] = Box.createHorizontalBox();
-		hbFields[4].add(lbFields[4]);
-		hbFields[4].add(tfFields[4]);
-		vb.add(hbFields[4]);
 
 
 		add(jp);
-		
+
 		setSize(600,400);
 		show();
 	}
 
-	public void btShowAlunos(){
+	public void btShow() throws IOException{
+		CadastroClienteDAO clienteDAO = new CadastroClienteDAO("ClienteDao");
+		
 		JPanel panel = new JPanel();
 		panel.setSize(new Dimension(400, 400));
 
@@ -159,26 +164,25 @@ public class TelaCliente extends JFrame{
 		spScroll.setPreferredSize(new Dimension(400, 400));
 
 		taText.setText("");
-		try
-		{
-			List<Cliente> l = l.getAll();
+		try{
+			List<Cliente> l = clienteDAO.getAll();
 			for (Cliente a : l)
 				taText.append(a + "\n");
 		} catch (Exception ex) {ex.printStackTrace();}
 
 		panel.add(spScroll);
 		UIManager.put("OptionPane.minimumSize",new Dimension(400, 400));
-		JOptionPane.showMessageDialog(null, panel, "Alunos", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, panel, "Clientes", JOptionPane.PLAIN_MESSAGE);
 	}
 
 
-	public void btCreate() throws IOException{
+	public void btCreate() throws IOException, ExcecaoValorDuplicado{
 		CadastroClienteDAO clienteDAO = new CadastroClienteDAO("ClienteDao");
-		
+
+		String cpf = tfFields[0].getText();
 		String nome = tfFields[1].getText();
-		String cpf = tfFields[2].getText();
-		String email = tfFields[3].getText();
-		String tel = tfFields[4].getText();
+		String email = tfFields[2].getText();
+		String tel = tfFields[3].getText();
 
 		if (nome.equals("") || cpf.equals("") || cpf.length()>11 || cpf.length()<11 || cpf.equals("00000000000")
 				|| email.equals("") || tel.equals("")){
@@ -188,82 +192,84 @@ public class TelaCliente extends JFrame{
 
 		Cliente cli = new Cliente();
 		cli.setNome(nome);
-		cli.setCpfCnpj(Float.parseFloat(cpf));
+		cli.setCpfCnpj(Long.parseLong(cpf));
 		cli.setEmail(email);
 		cli.setTelefone(tel);
 		cli.print();
-		
+
 		clienteDAO.add(cli);
-	
+
 		JOptionPane.showMessageDialog(null, nome + " inserido com sucesso!");
 	}//create
 
-	public void btRetrieve()
-	{
+	public void btRetrieve() throws IOException{
+		CadastroClienteDAO clienteDAO = new CadastroClienteDAO("ClienteDao");
+
 		String id = "";
 		while (id.equals(""))
-			id = JOptionPane.showInputDialog("Digite o ID do cliente");
+			id = JOptionPane.showInputDialog("Digite o cpf/cnpj do cliente");
 
-		Aluno aluno = adao.get(Integer.parseInt(id));
-		tfFields[0].setText( (lastSelected = aluno.getId()) + "");
-		tfFields[1].setText(aluno.getMatricula() + "");
-		tfFields[2].setText(aluno.getNome());
-		tfFields[3].setText(aluno.getDisciplina());
-		tfFields[4].setText(aluno.getMediaDisciplina() + "");
-		tfFields[5].setText(aluno.getStatusDisciplina() ? "true" : "false");
+		Cliente cli = clienteDAO.get(Long.parseLong(id));
+
+		tfFields[0].setText(id);
+		tfFields[1].setText(cli.getNome());
+		tfFields[2].setText(cli.getEmail());
+		tfFields[3].setText(cli.getTelefone());
 
 		btUpdate.setEnabled(true);
 		btDelete.setEnabled(true);
 	}
 
-	public void btUpdateAluno()
-	{
-		String id = tfFields[0].getText();
-		String matricula = tfFields[1].getText();
-		String nome = tfFields[2].getText();
-		String disciplina = tfFields[3].getText();
-		String media = tfFields[4].getText();
+	public void btUpdate() throws IOException{
 
-		if (   matricula.equals("") || nome.equals("")
-				|| disciplina.equals("") || media.equals(""))
-		{
-			JOptionPane.showMessageDialog(null, "Os campos: matricula, nome, disciplina e media devem ser preenchidos!");
+		CadastroClienteDAO clienteDAO = new CadastroClienteDAO("ClienteDao");
+
+		String cpf = tfFields[0].getText();
+		String nome = tfFields[1].getText();
+		String email = tfFields[2].getText();
+		String tel = tfFields[3].getText();
+
+		if (nome.equals("") || cpf.equals("") || cpf.length()>11 || cpf.length()<11 || cpf.equals("00000000000")
+				|| email.equals("") || tel.equals("")){
+			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos!");
 			return;
 		}
 
-		Aluno aluno = new Aluno(Integer.parseInt(matricula), nome, disciplina, Double.parseDouble(media), false);
-		aluno.setStatusDisciplina( aluno.getStatusDisciplina() );
-		aluno.setId(Integer.parseInt(id));
-		try
-		{
-			adao.update(aluno);
-		} catch (Exception e){e.printStackTrace();}
+		Cliente cli = new Cliente();
+		cli.setNome(nome);
+		cli.setCpfCnpj(Long.parseLong(cpf));
+		cli.setEmail(email);
+		cli.setTelefone(tel);
+		cli.print();
 
-		JOptionPane.showMessageDialog(null, nome + " atualizado com sucesso!");
+		clienteDAO.update(cli);
+
+		JOptionPane.showMessageDialog(null, nome + " alterado com sucesso!");
 	}
 
-	public void btDeleteAluno()
-	{
-		String id = tfFields[0].getText();
-		String matricula = tfFields[1].getText();
-		String nome = tfFields[2].getText();
-		String disciplina = tfFields[3].getText();
-		String media = tfFields[4].getText();
+	public void btDelete() throws IOException{
+		
+		CadastroClienteDAO clienteDAO = new CadastroClienteDAO("ClienteDao");
 
-		if (   matricula.equals("") || nome.equals("")
-				|| disciplina.equals("") || media.equals(""))
-		{
-			JOptionPane.showMessageDialog(null, "Os campos: matricula, nome, disciplina e media devem ser preenchidos!");
+		String cpf = tfFields[0].getText();
+		String nome = tfFields[1].getText();
+		String email = tfFields[2].getText();
+		String tel = tfFields[3].getText();
+
+		if (nome.equals("") || cpf.equals("") || cpf.length()>11 || cpf.length()<11 || cpf.equals("00000000000")
+				|| email.equals("") || tel.equals("")){
+			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos!");
 			return;
 		}
 
-		Aluno aluno = new Aluno(Integer.parseInt(matricula), nome, disciplina, Double.parseDouble(media), false);
-		aluno.setStatusDisciplina( aluno.getStatusDisciplina() );
-		aluno.setId(Integer.parseInt(id));
-		try
-		{
-			adao.delete(aluno);
-		} catch (Exception e){e.printStackTrace();}
+		Cliente cli = new Cliente();
+		cli.setNome(nome);
+		cli.setCpfCnpj(Long.parseLong(cpf));
+		cli.setEmail(email);
+		cli.setTelefone(tel);
+		cli.print();
+
+		clienteDAO.remove(cli);
 
 		JOptionPane.showMessageDialog(null, nome + " excluido com sucesso!");
 
@@ -276,31 +282,5 @@ public class TelaCliente extends JFrame{
 		tfFields[3].setText("");
 		tfFields[4].setText("");
 		tfFields[5].setText("");
-	}
-	
-	public void btShowAlunos() {
-		JPanel panel = new JPanel();
-		panel.setSize(new Dimension(400, 400));
-
-		JTextArea taText = new JTextArea();
-		taText.setEditable(false);
-		JScrollPane spScroll = new JScrollPane(taText);
-		spScroll.setMaximumSize(new Dimension(400, 400));
-		spScroll.setPreferredSize(new Dimension(400, 400));
-
-		AlunoDAO adao = new AlunoDAO();
-
-		taText.setText("");
-		try
-		{
-			List<Aluno> l = adao.getAll();
-
-			for (Aluno a : l)
-				taText.append(a + "\n");
-		} catch (Exception ex) {ex.printStackTrace();}
-
-		panel.add(spScroll);
-		UIManager.put("OptionPane.minimumSize",new Dimension(400, 400));
-		JOptionPane.showMessageDialog(null, panel, "Lista de Alunos", JOptionPane.PLAIN_MESSAGE);
-	}//show
+	}//delete
 }
