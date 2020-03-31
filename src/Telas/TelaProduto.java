@@ -168,8 +168,7 @@ public class TelaProduto extends JFrame{
 		spScroll.setPreferredSize(new Dimension(400, 400));
 
 		taText.setText("");
-		try
-		{
+		try{
 			List<Produto> p = proDAO.getAll();
 			for (Produto a : p)
 				taText.append(a + "\n");
@@ -178,7 +177,7 @@ public class TelaProduto extends JFrame{
 		panel.add(spScroll);
 		UIManager.put("OptionPane.minimumSize",new Dimension(400, 400));
 		JOptionPane.showMessageDialog(null, panel, "Produtos", JOptionPane.PLAIN_MESSAGE);
-	}
+	}//show
 
 
 	public void btCreate()throws IOException, NumberFormatException, ExcecaoValorInvalido{
