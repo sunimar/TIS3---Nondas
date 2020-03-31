@@ -21,6 +21,7 @@ import DAO.ExcecaoValorDuplicado;
 import Entidades.Cliente;
 
 public class TelaCliente extends JFrame{
+	private static CadastroClienteDAO clienteDAO;
 	static JFrame f;
 	JPanel jp;
 	Box hb, vb;
@@ -34,6 +35,7 @@ public class TelaCliente extends JFrame{
 	int lastSelected = -1;
 
 	public TelaCliente(){
+		
 		f = new JFrame("Cliente"); 
 		jp = new JPanel();
 		hb = Box.createHorizontalBox();
@@ -152,7 +154,7 @@ public class TelaCliente extends JFrame{
 	}
 
 	public void btShow() throws IOException{
-		CadastroClienteDAO clienteDAO = new CadastroClienteDAO("ClienteDao");
+		clienteDAO = new CadastroClienteDAO("ClienteDao");
 		
 		JPanel panel = new JPanel();
 		panel.setSize(new Dimension(400, 400));
@@ -177,7 +179,7 @@ public class TelaCliente extends JFrame{
 
 
 	public void btCreate() throws IOException, ExcecaoValorDuplicado{
-		CadastroClienteDAO clienteDAO = new CadastroClienteDAO("ClienteDao");
+		clienteDAO = new CadastroClienteDAO("ClienteDao");
 
 		String cpf = tfFields[0].getText();
 		String nome = tfFields[1].getText();
@@ -203,7 +205,7 @@ public class TelaCliente extends JFrame{
 	}//create
 
 	public void btRetrieve() throws IOException{
-		CadastroClienteDAO clienteDAO = new CadastroClienteDAO("ClienteDao");
+		clienteDAO = new CadastroClienteDAO("ClienteDao");
 
 		String id = "";
 		while (id.equals(""))
@@ -222,7 +224,7 @@ public class TelaCliente extends JFrame{
 
 	public void btUpdate() throws IOException{
 
-		CadastroClienteDAO clienteDAO = new CadastroClienteDAO("ClienteDao");
+		clienteDAO = new CadastroClienteDAO("ClienteDao");
 
 		String cpf = tfFields[0].getText();
 		String nome = tfFields[1].getText();
@@ -249,7 +251,7 @@ public class TelaCliente extends JFrame{
 
 	public void btDelete() throws IOException{
 		
-		CadastroClienteDAO clienteDAO = new CadastroClienteDAO("ClienteDao");
+		clienteDAO = new CadastroClienteDAO("ClienteDao");
 
 		String cpf = tfFields[0].getText();
 		String nome = tfFields[1].getText();

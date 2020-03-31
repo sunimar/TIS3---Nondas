@@ -26,8 +26,8 @@ public class ProdutoDAO implements DAO<Produto, Integer> {
 	}
 
 	@Override
-	public void add(Produto cooperativa) {
-		produtos.add(cooperativa);
+	public void add(Produto prod) {
+		produtos.add(prod);
 		saveToFile();
 	}
 
@@ -39,7 +39,6 @@ public class ProdutoDAO implements DAO<Produto, Integer> {
 			}
 		}
 		return null;
-
 	}
 
 	@Override

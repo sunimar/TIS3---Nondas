@@ -3,6 +3,7 @@ package Telas;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -15,9 +16,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import Entidades.ExcecaoValorInvalido;
 import Entidades.Produto;
+import DAO.ProdutoDAO;
 
 public class TelaProduto extends JFrame{
+	private static ProdutoDAO proDAO;
 	static JFrame f;
 	JPanel jp;
 	Box hb, vb;
@@ -64,27 +68,32 @@ public class TelaProduto extends JFrame{
 
 		btRetrieve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btRetrieveAluno();
+				try {
+					btRetrieve();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
 		btUpdate.setEnabled(false);
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btUpdateAluno();
+				//btUpdate();
 			}
 		});
 
 		btDelete.setEnabled(false);
 		btDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btDeleteAluno();
+				//btDelete();
 			}
 		});
 
 		btShow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btShowAlunos();
+				//btShow();
 			}
 		});
 
@@ -105,7 +114,7 @@ public class TelaProduto extends JFrame{
 
 		lbFields[0] = new JLabel("ID: ");
 		tfFields[0] = new JTextField(10);
-		tfFields[0].setEditable(false);
+		//tfFields[0].setEditable(false);
 		hbFields[0] = Box.createHorizontalBox();
 		hbFields[0].add(lbFields[0]);
 		hbFields[0].add(tfFields[0]);
@@ -162,40 +171,42 @@ public class TelaProduto extends JFrame{
 	}
 
 
-	public void btCreate()throws Exception{
-
+	public void btCreate()throws IOException, NumberFormatException, ExcecaoValorInvalido{
+		proDAO = new ProdutoDAO("ProdutoDAO");
+		String id = tfFields[0].getText();
 		String nome = tfFields[1].getText();
 		String preCom = tfFields[2].getText();
 		String preVen = tfFields[3].getText();
 
-		if (nome.equals("") || preCom.equals("") || preVen.equals("")){
+		if (id.equals("") || nome.equals("") || preCom.equals("") || preVen.equals("")){
 			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos!");
 			return;
 		}
 
 		Produto prod = new Produto();
+		prod.setIdProduto(Integer.parseInt(id));
 		prod.setNome(nome);
 		prod.setPrecoCompra(Float.parseFloat(preCom));
 		prod.setPrecoVenda(Float.parseFloat(preVen));
 
 		prod.print();
+		proDAO.add(prod);
 
 		JOptionPane.showMessageDialog(null, nome + " inserido com sucesso!");
 	}//create
 
-	public void btRetrieveAluno()
-	{
+	public void btRetrieve() throws IOException{
+		proDAO = new ProdutoDAO("ProdutoDAO");
 		String id = "";
 		while (id.equals(""))
-			id = JOptionPane.showInputDialog("Digite o ID do aluno");
+			id = JOptionPane.showInputDialog("Digite o ID do produto");
 
-		Aluno aluno = adao.get(Integer.parseInt(id));
-		tfFields[0].setText( (lastSelected = aluno.getId()) + "");
-		tfFields[1].setText(aluno.getMatricula() + "");
-		tfFields[2].setText(aluno.getNome());
-		tfFields[3].setText(aluno.getDisciplina());
-		tfFields[4].setText(aluno.getMediaDisciplina() + "");
-		tfFields[5].setText(aluno.getStatusDisciplina() ? "true" : "false");
+		Produto prod = proDAO.get(Integer.parseInt(id));
+		
+		tfFields[0].setText(id);
+		tfFields[1].setText(prod.getNome());
+		tfFields[2].setText(String.valueOf(prod.getPrecoCompra()));
+		tfFields[3].setText(String.valueOf(prod.getPrecoVenda()));
 
 		btUpdate.setEnabled(true);
 		btDelete.setEnabled(true);
