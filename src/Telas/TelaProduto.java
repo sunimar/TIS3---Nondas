@@ -147,7 +147,7 @@ public class TelaProduto extends JFrame{
 		show();
 	}
 
-	public void btShowAlunos(){
+	public void btShow(){
 		JPanel panel = new JPanel();
 		panel.setSize(new Dimension(400, 400));
 
@@ -160,8 +160,8 @@ public class TelaProduto extends JFrame{
 		taText.setText("");
 		try
 		{
-			List<Aluno> l = adao.getAll();
-			for (Aluno a : l)
+			List<Produto> p = proDAO.getAll();
+			for (Produto a : p)
 				taText.append(a + "\n");
 		} catch (Exception ex) {ex.printStackTrace();}
 
@@ -212,13 +212,11 @@ public class TelaProduto extends JFrame{
 		btDelete.setEnabled(true);
 	}
 
-	public void btUpdateAluno()
-	{
+	public void btUpdate(){
 		String id = tfFields[0].getText();
 		String matricula = tfFields[1].getText();
 		String nome = tfFields[2].getText();
 		String disciplina = tfFields[3].getText();
-		String media = tfFields[4].getText();
 
 		if (   matricula.equals("") || nome.equals("")
 				|| disciplina.equals("") || media.equals(""))

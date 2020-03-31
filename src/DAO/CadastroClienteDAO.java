@@ -27,18 +27,16 @@ public class CadastroClienteDAO implements DAO<Cliente, Long> {
 
 	@Override
 	public void add(Cliente cli) throws ExcecaoValorDuplicado{
-		
+
 		for (Cliente busca : clientes) {
 			if (cli.getCpfCnpj() == busca.getCpfCnpj()) {
 				throw new ExcecaoValorDuplicado("O CpfCnpj: ", cli.getCpfCnpj());
 			}
-			
-			}
+
+		}
 		clientes.add(cli);
 		saveToFile();
-		
-		
-		
+
 	}
 
 	@Override
