@@ -201,7 +201,7 @@ public class TelaProduto extends JFrame{
 		while (id.equals(""))
 			id = JOptionPane.showInputDialog("Digite o ID do produto");
 
-		Produto prod = proDAO.get(Integer.parseInt(id));
+		Produto prod = proDAO.get(id);
 
 		tfFields[0].setText(id);
 		tfFields[1].setText(prod.getNome());

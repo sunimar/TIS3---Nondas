@@ -1,39 +1,100 @@
 package Entidades;
 
-public class Servico {
-	private int codServ;
-	private String nomeServ;
-	private double precoServ;
-	private Produto [] prodRel;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Random;
 
-	public Servico() {}
+public class Servico  implements Serializable {
 
-	public int getCodServ() {
-		return codServ;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private TipoServicos tipoServiço;
+	private long cpfCnpjCliente;
+	private double valor; 
+	private LocalDateTime entrada;
+	private LocalDateTime previsaoEntrega;
+	private LocalDateTime entrega;
+	private int numOs;
+	private Random random = new Random();
+	
+	public Servico(long cpfCnpjCliente, LocalDateTime entrada, TipoServicos tipoServiço, double valor, LocalDateTime previsaoEntrega) {
+		
+		setEntrada(entrada); 
+		setTipoServiço(tipoServiço);
+		setValor(valor);
+		setPrevisaoEntrega(previsaoEntrega);
+		setNumOs();
+		setEntrega(null);
+		
 	}
 
-	public void setCodServ(int codServ) {
-		this.codServ = codServ;
+	public int getNumOs() {
+		return numOs;
 	}
 
-	public String getNomeServ() {
-		return nomeServ;
+
+	public void setNumOs() {
+		this.numOs = random.nextInt(100000);
 	}
 
-	public void setNomeServ(String nomeServ) {
-		this.nomeServ = nomeServ;
+
+	public TipoServicos getTipoServiço() {
+		return tipoServiço;
 	}
 
-	public double getPrecoServ() {
-		return precoServ;
+
+	public void setTipoServiço(TipoServicos tipoServiço) {
+		this.tipoServiço = tipoServiço;
 	}
 
-	public void setPrecoServ(double precoServ) {
-		this.precoServ = precoServ;
+
+	public double getValor() {
+		return valor;
 	}
 
-	public void print() {
-		System.out.println(this.nomeServ + this.precoServ);
+
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+
+	public LocalDateTime getEntrada() {
+		return entrada;
+	}
+
+
+	public void setEntrada(LocalDateTime entrada) {
+		this.entrada = entrada;
+	}
+
+
+	public LocalDateTime getPrevisaoEntrega() {
+		return previsaoEntrega;
+	}
+
+
+	public void setPrevisaoEntrega(LocalDateTime previsaoEntrega) {
+		this.previsaoEntrega = previsaoEntrega;
+	}
+
+
+	public LocalDateTime getEntrega() {
+		return entrega;
+	}
+
+
+	public void setEntrega(LocalDateTime entrega) {
+		this.entrega = entrega;
+	}
+
+	public long getCpfCnpjCliente() {
+		return cpfCnpjCliente;
+	}
+
+
+	public void setCpfCnpjCliente(long cpfCnpjCliente) {
+		this.cpfCnpjCliente = cpfCnpjCliente;
 	}
 	
 	

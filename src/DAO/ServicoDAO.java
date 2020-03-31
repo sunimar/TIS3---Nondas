@@ -9,41 +9,34 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import Entidades.Cliente;
+import Entidades.Produto;
+import Entidades.Servico;
 
-public class CadastroClienteDAO implements DAO<Cliente, String> {
+public class ServicoDAO implements DAO<Servico, String> {
 
-	private List<Cliente> clientes;
+	private List<Servico> servicos;
 	private File file;
 	private FileOutputStream fos;
 	private ObjectOutputStream outputFile;
 
-	public CadastroClienteDAO(String filename) throws IOException {
-		clientes = new ArrayList<Cliente>();
+	public ServicoDAO(String filename) throws IOException {
+		servicos = new ArrayList<Servico>();
 		file = new File(filename);
 		if (file.exists())
 			readFromFile();
 	}
 
 	@Override
-	public void add(Cliente cli) throws ExcecaoValorDuplicado{
-		
-		for (Cliente busca : clientes) {
-			if (cli.getCpfCnpj() == busca.getCpfCnpj()) {
-				throw new ExcecaoValorDuplicado("O CpfCnpj: ", cli.getCpfCnpj());
-			}
-			
-			}
-		clientes.add(cli);
-		saveToFile();	
-		
+	public void add(Servico cooperativa) {
+		servicos.add(cooperativa);
+		saveToFile();
 	}
 
 	@Override
-	public Cliente get(String chave) {
-		for (Cliente cli : clientes) {
-			if (Long.parseLong(chave) == cli.getCpfCnpj()) {
-				return cli;
+	public Servico get(String chave) {
+		for (Servico serv : servicos) {
+			if (Long.parseLong(chave) == serv.getCpfCnpjCliente()) {
+				return serv;
 			}
 		}
 		return null;
@@ -51,56 +44,59 @@ public class CadastroClienteDAO implements DAO<Cliente, String> {
 	}
 
 	@Override
-	public List<Cliente> getAll() {
+	public List<Servico> getAll() {
 
-		return clientes;
+		return servicos;
 	}
 
 	@Override
-	public void update(Cliente cli) {
-		int index = -1;
+	public void update(Servico os) {
 		
-		for (Cliente tes : clientes) {
-			if(tes.getCpfCnpj() == cli.getCpfCnpj()) {
-				index = clientes.indexOf(tes);
+	int index = -1;
+		
+		for (Servico tes : servicos) {
+			if(tes.getNumOs() == os.getNumOs()) {
+				index = servicos.indexOf(tes);
 				break;
 			}
 		}
+		
 		if (index != -1) {
-			clientes.set(index, cli);
+			servicos.set(index, os);
 			saveToFile();
 		}
 	}
 
 	@Override
-	public void remove(Cliente cli) {
+	public void remove(Servico os) {
+		
 		int index = -1;
 		
-		for (Cliente tes : clientes) {
-			if(tes.getCpfCnpj() == cli.getCpfCnpj()) {
-				index = clientes.indexOf(tes);
+		for (Servico tes : servicos) {
+			if(tes.getNumOs() == os.getNumOs()) {
+				index = servicos.indexOf(tes);
 				break;
 			}
 		}
 		
 		if (index != -1) {
-			clientes.remove(index);
+			servicos.remove(index);
 		}
 		saveToFile();
 
 	}
 
 	private void readFromFile() {
-		Cliente cli;
+		Servico serv;
 		try (FileInputStream fis = new FileInputStream(file);
 				ObjectInputStream inputFile = new ObjectInputStream(fis)) {
 
 			while (fis.available() > 0) {
-				cli = (Cliente) inputFile.readObject();
-				clientes.add(cli);
+				serv = (Servico) inputFile.readObject();
+				servicos.add(serv);
 			}
 		} catch (Exception e) {
-			System.out.println("ERRO ao ler Cliente do disco!");
+			System.out.println("ERRO ao ler Ordem de Servico do disco!");
 			e.printStackTrace();
 		}
 	}
@@ -109,12 +105,12 @@ public class CadastroClienteDAO implements DAO<Cliente, String> {
 		try (FileOutputStream fos = new FileOutputStream(file, false);
 				ObjectOutputStream outputFile = new ObjectOutputStream(fos)) {
 
-			for (Cliente p : clientes) {
+			for (Servico p : servicos) {
 				outputFile.writeObject(p);
 			}
 			outputFile.flush();
 		} catch (Exception e) {
-			System.out.println("ERRO ao gravar Clientes no disco!");
+			System.out.println("ERRO ao gravar Ordem de Servico no disco!");
 			e.printStackTrace();
 		}
 

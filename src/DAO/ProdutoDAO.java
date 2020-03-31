@@ -9,9 +9,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import Entidades.Cliente;
 import Entidades.Produto;
 
-public class ProdutoDAO implements DAO<Produto, Integer> {
+public class ProdutoDAO implements DAO<Produto, String> {
 
 	private List<Produto> produtos;
 	private File file;
@@ -26,30 +27,38 @@ public class ProdutoDAO implements DAO<Produto, Integer> {
 	}
 
 	@Override
-	public void add(Produto prod) {
-		produtos.add(prod);
+	public void add(Produto cooperativa) {
+		produtos.add(cooperativa);
 		saveToFile();
 	}
 
 	@Override
-	public Produto get(Integer chave) {
+	public Produto get(String chave) {
 		for (Produto pro : produtos) {
-			if (chave.longValue() == pro.getIdProduto()) {
+			if (Long.parseLong(chave) == pro.getIdProduto()) {
 				return pro;
 			}
 		}
 		return null;
+
 	}
 
 	@Override
 	public List<Produto> getAll() {
-
 		return produtos;
 	}
 
 	@Override
 	public void update(Produto os) {
-		int index = produtos.indexOf(os);
+		int index = -1;
+		
+		for (Produto tes : produtos) {
+			if(tes.getIdProduto() == os.getIdProduto()) {
+				index = produtos.indexOf(tes);
+				break;
+			}
+		}
+		
 		if (index != -1) {
 			produtos.set(index, os);
 			saveToFile();
@@ -58,7 +67,15 @@ public class ProdutoDAO implements DAO<Produto, Integer> {
 
 	@Override
 	public void remove(Produto os) {
-		int index = produtos.indexOf(os);
+		int index = -1;
+		
+		for (Produto tes : produtos) {
+			if(tes.getIdProduto() == os.getIdProduto()) {
+				index = produtos.indexOf(tes);
+				break;
+			}
+		}
+		
 		if (index != -1) {
 			produtos.remove(index);
 		}

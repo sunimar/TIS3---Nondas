@@ -211,7 +211,7 @@ public class TelaCliente extends JFrame{
 		while (id.equals(""))
 			id = JOptionPane.showInputDialog("Digite o cpf/cnpj do cliente");
 
-		Cliente cli = clienteDAO.get(Long.parseLong(id));
+		Cliente cli = clienteDAO.get(id);
 
 		tfFields[0].setText(id);
 		tfFields[1].setText(cli.getNome());

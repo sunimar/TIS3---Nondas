@@ -1,8 +1,11 @@
 package Entidades;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Produto{
+public class Produto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private Integer idProduto;
 	private String nome;
 	private float precoCompra;
@@ -22,7 +25,7 @@ public class Produto{
 		return nome;
 	}
 
-	public int getIdProduto() {
+	public Integer getIdProduto() {
 		return idProduto;
 	}
 
