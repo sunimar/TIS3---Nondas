@@ -282,7 +282,5 @@ public class TelaCliente extends JFrame{
 		tfFields[1].setText("");
 		tfFields[2].setText("");
 		tfFields[3].setText("");
-		tfFields[4].setText("");
-		tfFields[5].setText("");
 	}//delete
 }
