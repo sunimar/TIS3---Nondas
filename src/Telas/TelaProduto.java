@@ -202,7 +202,7 @@ public class TelaProduto extends JFrame{
 			id = JOptionPane.showInputDialog("Digite o ID do produto");
 
 		Produto prod = proDAO.get(Integer.parseInt(id));
-		
+
 		tfFields[0].setText(id);
 		tfFields[1].setText(prod.getNome());
 		tfFields[2].setText(String.valueOf(prod.getPrecoCompra()));
@@ -210,54 +210,52 @@ public class TelaProduto extends JFrame{
 
 		btUpdate.setEnabled(true);
 		btDelete.setEnabled(true);
-	}
+	}//retrieve
 
-	public void btUpdate(){
+	public void btUpdate() throws IOException, NumberFormatException, ExcecaoValorInvalido{
+		proDAO = new ProdutoDAO("ProdutoDAO");
 		String id = tfFields[0].getText();
-		String matricula = tfFields[1].getText();
-		String nome = tfFields[2].getText();
-		String disciplina = tfFields[3].getText();
+		String nome = tfFields[1].getText();
+		String preCom = tfFields[2].getText();
+		String preVen = tfFields[3].getText();
 
-		if (   matricula.equals("") || nome.equals("")
-				|| disciplina.equals("") || media.equals(""))
-		{
-			JOptionPane.showMessageDialog(null, "Os campos: matricula, nome, disciplina e media devem ser preenchidos!");
+		if (id.equals("") || nome.equals("") || preCom.equals("") || preVen.equals("")){
+			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos!");
 			return;
 		}
 
-		Aluno aluno = new Aluno(Integer.parseInt(matricula), nome, disciplina, Double.parseDouble(media), false);
-		aluno.setStatusDisciplina( aluno.getStatusDisciplina() );
-		aluno.setId(Integer.parseInt(id));
-		try
-		{
-			adao.update(aluno);
-		} catch (Exception e){e.printStackTrace();}
+		Produto prod = new Produto();
+		prod.setIdProduto(Integer.parseInt(id));
+		prod.setNome(nome);
+		prod.setPrecoCompra(Float.parseFloat(preCom));
+		prod.setPrecoVenda(Float.parseFloat(preVen));
+
+		prod.print();
+		proDAO.update(prod);
 
 		JOptionPane.showMessageDialog(null, nome + " atualizado com sucesso!");
-	}
+	}//update
 
-	public void btDeleteAluno()
-	{
+	public void btDelete() throws IOException, NumberFormatException, ExcecaoValorInvalido{
+		proDAO = new ProdutoDAO("ProdutoDAO");
 		String id = tfFields[0].getText();
-		String matricula = tfFields[1].getText();
-		String nome = tfFields[2].getText();
-		String disciplina = tfFields[3].getText();
-		String media = tfFields[4].getText();
+		String nome = tfFields[1].getText();
+		String preCom = tfFields[2].getText();
+		String preVen = tfFields[3].getText();
 
-		if (   matricula.equals("") || nome.equals("")
-				|| disciplina.equals("") || media.equals(""))
-		{
-			JOptionPane.showMessageDialog(null, "Os campos: matricula, nome, disciplina e media devem ser preenchidos!");
+		if (id.equals("") || nome.equals("") || preCom.equals("") || preVen.equals("")){
+			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos!");
 			return;
 		}
 
-		Aluno aluno = new Aluno(Integer.parseInt(matricula), nome, disciplina, Double.parseDouble(media), false);
-		aluno.setStatusDisciplina( aluno.getStatusDisciplina() );
-		aluno.setId(Integer.parseInt(id));
-		try
-		{
-			adao.delete(aluno);
-		} catch (Exception e){e.printStackTrace();}
+		Produto prod = new Produto();
+		prod.setIdProduto(Integer.parseInt(id));
+		prod.setNome(nome);
+		prod.setPrecoCompra(Float.parseFloat(preCom));
+		prod.setPrecoVenda(Float.parseFloat(preVen));
+
+		prod.print();
+		proDAO.remove(prod);
 
 		JOptionPane.showMessageDialog(null, nome + " excluido com sucesso!");
 
@@ -268,33 +266,5 @@ public class TelaProduto extends JFrame{
 		tfFields[1].setText("");
 		tfFields[2].setText("");
 		tfFields[3].setText("");
-		tfFields[4].setText("");
-		tfFields[5].setText("");
-	}
-
-	public void btShowAlunos() {
-		JPanel panel = new JPanel();
-		panel.setSize(new Dimension(400, 400));
-
-		JTextArea taText = new JTextArea();
-		taText.setEditable(false);
-		JScrollPane spScroll = new JScrollPane(taText);
-		spScroll.setMaximumSize(new Dimension(400, 400));
-		spScroll.setPreferredSize(new Dimension(400, 400));
-
-		AlunoDAO adao = new AlunoDAO();
-
-		taText.setText("");
-		try
-		{
-			List<Aluno> l = adao.getAll();
-
-			for (Aluno a : l)
-				taText.append(a + "\n");
-		} catch (Exception ex) {ex.printStackTrace();}
-
-		panel.add(spScroll);
-		UIManager.put("OptionPane.minimumSize",new Dimension(400, 400));
-		JOptionPane.showMessageDialog(null, panel, "Lista de Alunos", JOptionPane.PLAIN_MESSAGE);
-	}//show
+	}//delete
 }//class
