@@ -80,20 +80,30 @@ public class TelaProduto extends JFrame{
 		btUpdate.setEnabled(false);
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//btUpdate();
+				try {
+					btUpdate();
+				} catch (NumberFormatException | IOException | ExcecaoValorInvalido e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
 		btDelete.setEnabled(false);
 		btDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//btDelete();
+				try {
+					btDelete();
+				} catch (NumberFormatException | IOException | ExcecaoValorInvalido e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
 		btShow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//btShow();
+				btShow();
 			}
 		});
 
@@ -167,7 +177,7 @@ public class TelaProduto extends JFrame{
 
 		panel.add(spScroll);
 		UIManager.put("OptionPane.minimumSize",new Dimension(400, 400));
-		JOptionPane.showMessageDialog(null, panel, "Alunos", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, panel, "Produtos", JOptionPane.PLAIN_MESSAGE);
 	}
 
 
