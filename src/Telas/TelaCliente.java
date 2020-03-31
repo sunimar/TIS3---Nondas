@@ -16,8 +16,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import Entidades.Cliente;
 import DAO.CadastroClienteDAO;
+import Entidades.Cliente;
 
 public class TelaCliente extends JFrame{
 	static JFrame f;
@@ -55,7 +55,12 @@ public class TelaCliente extends JFrame{
 
 		btCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btCreate();
+				try {
+					btCreate();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -156,8 +161,8 @@ public class TelaCliente extends JFrame{
 		taText.setText("");
 		try
 		{
-			List<Aluno> l = adao.getAll();
-			for (Aluno a : l)
+			List<Cliente> l = l.getAll();
+			for (Cliente a : l)
 				taText.append(a + "\n");
 		} catch (Exception ex) {ex.printStackTrace();}
 
@@ -168,6 +173,7 @@ public class TelaCliente extends JFrame{
 
 
 	public void btCreate() throws IOException{
+		CadastroClienteDAO clienteDAO = new CadastroClienteDAO("ClienteDao");
 		
 		String nome = tfFields[1].getText();
 		String cpf = tfFields[2].getText();
@@ -186,10 +192,9 @@ public class TelaCliente extends JFrame{
 		cli.setEmail(email);
 		cli.setTelefone(tel);
 		cli.print();
-		/*
-		CadastroClienteDAO cliDAO = new CadastroClienteDAO();
-		cliDAO.add(cli);
-		*/
+		
+		clienteDAO.add(cli);
+	
 		JOptionPane.showMessageDialog(null, nome + " inserido com sucesso!");
 	}//create
 
