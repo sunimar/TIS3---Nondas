@@ -40,12 +40,12 @@ class TelaPrincipal extends JFrame{
 		f = new JFrame("Nondas Celulares"); 
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// create a label to display text 
-		l = new JLabel("Selecione a opção desejada:"); 
+		l = new JLabel("Selecione a opcaoo desejada:"); 
 
 		// create a new buttons 
 		btCad = new JButton("Cadastros"); 
-		btLan = new JButton("Lançamentos"); 
-		btRel = new JButton("Relatórios"); 
+		btLan = new JButton("Lancamentos"); 
+		btRel = new JButton("Relatorios"); 
 		btSai = new JButton("Sair");
 
 		btCad.addActionListener(new ActionListener() {

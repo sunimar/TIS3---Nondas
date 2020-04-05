@@ -26,12 +26,12 @@ public class TelaCadastros {
 		// create a new frame with text field and button 
 		f = new JFrame("Cadastros"); 
 		// create a label to display text 
-		l = new JLabel("Selecione a opção desejada:"); 
+		l = new JLabel("Selecione a opcao desejada:"); 
 
 		// create a new buttons 
 		btCli = new JButton("Cliente"); 
 		btProd = new JButton("Produto"); 
-		btServ = new JButton("Tipo de Serviço"); 
+		btServ = new JButton("Tipo de Servico"); 
 		btVol = new JButton("Voltar");
 
 		btCli.addActionListener(new ActionListener() {

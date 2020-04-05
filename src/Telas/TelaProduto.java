@@ -211,7 +211,7 @@ public class TelaProduto extends JFrame{
 			id = JOptionPane.showInputDialog("Digite o ID do produto");
 
 		Produto prod = proDAO.get(id);
-
+		if(prod != null) {
 		tfFields[0].setText(id);
 		tfFields[1].setText(prod.getNome());
 		tfFields[2].setText(String.valueOf(prod.getPrecoCompra()));
@@ -219,6 +219,9 @@ public class TelaProduto extends JFrame{
 
 		btUpdate.setEnabled(true);
 		btDelete.setEnabled(true);
+		}else {
+			JOptionPane.showMessageDialog(null, "Produto inexistente!");
+		}
 	}//retrieve
 
 	public void btUpdate() throws IOException, NumberFormatException, ExcecaoValorInvalido{

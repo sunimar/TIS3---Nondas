@@ -35,7 +35,7 @@ public class TelaCliente extends JFrame{
 	int lastSelected = -1;
 
 	public TelaCliente(){
-		
+
 		f = new JFrame("Cliente"); 
 		jp = new JPanel();
 		hb = Box.createHorizontalBox();
@@ -155,7 +155,7 @@ public class TelaCliente extends JFrame{
 
 	public void btShow() throws IOException{
 		clienteDAO = new CadastroClienteDAO("ClienteDao");
-		
+
 		JPanel panel = new JPanel();
 		panel.setSize(new Dimension(400, 400));
 
@@ -212,14 +212,17 @@ public class TelaCliente extends JFrame{
 			id = JOptionPane.showInputDialog("Digite o cpf/cnpj do cliente");
 
 		Cliente cli = clienteDAO.get(id);
+		if(cli != null){
+			tfFields[0].setText(id);
+			tfFields[1].setText(cli.getNome());
+			tfFields[2].setText(cli.getEmail());
+			tfFields[3].setText(cli.getTelefone());
 
-		tfFields[0].setText(id);
-		tfFields[1].setText(cli.getNome());
-		tfFields[2].setText(cli.getEmail());
-		tfFields[3].setText(cli.getTelefone());
-
-		btUpdate.setEnabled(true);
-		btDelete.setEnabled(true);
+			btUpdate.setEnabled(true);
+			btDelete.setEnabled(true);
+		}else {
+			JOptionPane.showMessageDialog(null, "Cliente inexistente!");
+		}
 	}
 
 	public void btUpdate() throws IOException{
@@ -250,7 +253,7 @@ public class TelaCliente extends JFrame{
 	}
 
 	public void btDelete() throws IOException{
-		
+
 		clienteDAO = new CadastroClienteDAO("ClienteDao");
 
 		String cpf = tfFields[0].getText();
@@ -282,7 +285,5 @@ public class TelaCliente extends JFrame{
 		tfFields[1].setText("");
 		tfFields[2].setText("");
 		tfFields[3].setText("");
-		tfFields[4].setText("");
-		tfFields[5].setText("");
 	}//delete
 }
