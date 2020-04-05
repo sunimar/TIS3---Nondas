@@ -6,13 +6,13 @@ import java.util.Random;
 public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Integer idProduto;
+	private Long idProduto;
 	private String nome;
 	private float precoCompra;
 	private float precoVenda;
 	//private Random random = new Random(); 
 
-	public Produto(Integer idProduto, String nome, float precoCompra, float precoVenda) throws ExcecaoValorInvalido {
+	public Produto(Long idProduto, String nome, float precoCompra, float precoVenda) throws ExcecaoValorInvalido {
 		this.setIdProduto(idProduto);
 		this.setNome(nome);
 		this.setPrecoCompra(precoCompra);
@@ -25,11 +25,11 @@ public class Produto implements Serializable {
 		return nome;
 	}
 
-	public Integer getIdProduto() {
+	public Long getIdProduto() {
 		return idProduto;
 	}
 
-	public void setIdProduto(Integer idProduto) {
+	public void setIdProduto(Long idProduto) {
 		this.idProduto = idProduto;
 	}
 

@@ -193,7 +193,7 @@ public class TelaProduto extends JFrame{
 		}
 
 		Produto prod = new Produto();
-		prod.setIdProduto(Integer.parseInt(id));
+		prod.setIdProduto(Long.parseLong(id));
 		prod.setNome(nome);
 		prod.setPrecoCompra(Float.parseFloat(preCom));
 		prod.setPrecoVenda(Float.parseFloat(preVen));
@@ -237,7 +237,7 @@ public class TelaProduto extends JFrame{
 		}
 
 		Produto prod = new Produto();
-		prod.setIdProduto(Integer.parseInt(id));
+		prod.setIdProduto(Long.parseLong(id));
 		prod.setNome(nome);
 		prod.setPrecoCompra(Float.parseFloat(preCom));
 		prod.setPrecoVenda(Float.parseFloat(preVen));
@@ -261,7 +261,7 @@ public class TelaProduto extends JFrame{
 		}
 
 		Produto prod = new Produto();
-		prod.setIdProduto(Integer.parseInt(id));
+		prod.setIdProduto(Long.parseLong(id));
 		prod.setNome(nome);
 		prod.setPrecoCompra(Float.parseFloat(preCom));
 		prod.setPrecoVenda(Float.parseFloat(preVen));

@@ -70,7 +70,7 @@ public class ProdutoDAO implements DAO<Produto, String> {
 		int index = -1;
 		
 		for (Produto tes : produtos) {
-			if(tes.getIdProduto() == os.getIdProduto()) {
+			if((long)tes.getIdProduto() == (long)os.getIdProduto()) {
 				index = produtos.indexOf(tes);
 				break;
 			}
