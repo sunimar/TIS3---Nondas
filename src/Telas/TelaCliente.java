@@ -22,7 +22,6 @@ import Entidades.Cliente;
 
 public class TelaCliente extends JFrame{
 	private static CadastroClienteDAO clienteDAO;
-	static JFrame f;
 	JPanel jp;
 	Box hb, vb;
 
@@ -36,7 +35,7 @@ public class TelaCliente extends JFrame{
 
 	public TelaCliente(){
 
-		f = new JFrame("Cliente"); 
+		super("Cliente"); 
 		jp = new JPanel();
 		hb = Box.createHorizontalBox();
 		vb = Box.createVerticalBox();
@@ -51,8 +50,8 @@ public class TelaCliente extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				//this.dispose();
+				TelaCadastros.f.setVisible(true);
+				dispose();
 			}
 		});
 
@@ -116,7 +115,6 @@ public class TelaCliente extends JFrame{
 		hb.add(btVol);
 		vb.add(hb);
 		jp.add(vb);
-		f.add(jp);
 
 		lbFields[0] = new JLabel("CPF/CNPJ: ");
 		tfFields[0] = new JTextField(10);
@@ -152,6 +150,15 @@ public class TelaCliente extends JFrame{
 		setSize(600,400);
 		show();
 	}
+	
+	public boolean validaCampos(String nome, String cpf_cnpj, String email, String tel) {
+		if ((nome.equals("") || cpf_cnpj.equals("") || cpf_cnpj.equals("00000000000")
+			|| email.equals("") || tel.equals("")) || cpf_cnpj.length() != 14 && cpf_cnpj.length() != 11) {
+			System.out.println("leng: " + cpf_cnpj.length());
+			return (false);
+		}
+		return (true);
+	}
 
 	public void btShow() throws IOException{
 		clienteDAO = new CadastroClienteDAO("ClienteDao");
@@ -186,9 +193,8 @@ public class TelaCliente extends JFrame{
 		String email = tfFields[2].getText();
 		String tel = tfFields[3].getText();
 
-		if (nome.equals("") || cpf.equals("") || cpf.length()>11 || cpf.length()<11 || cpf.equals("00000000000")
-				|| email.equals("") || tel.equals("")){
-			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos!");
+		if (validaCampos(nome, cpf, email, tel) != true) {
+			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos corretamente!");
 			return;
 		}
 
@@ -199,7 +205,12 @@ public class TelaCliente extends JFrame{
 		cli.setTelefone(tel);
 		cli.print();
 
-		clienteDAO.add(cli);
+		try {
+			clienteDAO.add(cli);
+		} catch (ExcecaoValorDuplicado evd){
+			JOptionPane.showMessageDialog(null, "Valor ja existente!");
+			return;
+		}
 
 		JOptionPane.showMessageDialog(null, nome + " inserido com sucesso!");
 	}//create
@@ -234,9 +245,8 @@ public class TelaCliente extends JFrame{
 		String email = tfFields[2].getText();
 		String tel = tfFields[3].getText();
 
-		if (nome.equals("") || cpf.equals("") || cpf.length()>11 || cpf.length()<11 || cpf.equals("00000000000")
-				|| email.equals("") || tel.equals("")){
-			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos!");
+		if (validaCampos(nome, cpf, email, tel) != true) {
+			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos corretamente!");
 			return;
 		}
 
@@ -261,9 +271,8 @@ public class TelaCliente extends JFrame{
 		String email = tfFields[2].getText();
 		String tel = tfFields[3].getText();
 
-		if (nome.equals("") || cpf.equals("") || cpf.length()>11 || cpf.length()<11 || cpf.equals("00000000000")
-				|| email.equals("") || tel.equals("")){
-			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos!");
+		if (validaCampos(nome, cpf, email, tel) != true) {
+			JOptionPane.showMessageDialog(null, "Os campos devem ser preenchidos corretamente!");
 			return;
 		}
 

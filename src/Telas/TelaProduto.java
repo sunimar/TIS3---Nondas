@@ -50,8 +50,8 @@ public class TelaProduto extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				//this.dispose();
+				TelaCadastros.f.setVisible(true);
+				dispose();
 			}
 		});
 

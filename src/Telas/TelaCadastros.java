@@ -1,5 +1,7 @@
 package Telas;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -38,6 +40,7 @@ public class TelaCadastros {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				f.setVisible(false);
 				new TelaCliente();
 
 			}
@@ -47,8 +50,8 @@ public class TelaCadastros {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				f.setVisible(false);
 				new TelaProduto();
-
 			}
 		});
 		
