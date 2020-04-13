@@ -7,6 +7,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.JOptionPane;
 import Telas.TelaCadastros;
+import Telas.TelaLancamentos;
 
 public class Main{
 
@@ -54,6 +55,14 @@ class TelaPrincipal extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				new TelaCadastros();
 
+			}
+		});
+		
+		btLan.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new TelaLancamentos();
 			}
 		});
 

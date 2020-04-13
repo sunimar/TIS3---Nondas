@@ -1,7 +1,5 @@
 package Telas;
 
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,49 +9,58 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-public class TelaCadastros {
+public class TelaLancamentos {
 	// JFrame 
 	static JFrame f; 
 
 	// JButton 
-	static JButton btCli, btProd, btServ, btVol; 
+	static JButton btOv, btOs, btCon, btVol; 
 
 	// label to display text 
 	static JLabel l;
 
 	Box box;
 
-	public TelaCadastros() {
+	public TelaLancamentos() {
 		// create a new frame with text field and button 
-		f = new JFrame("Cadastros"); 
+		f = new JFrame("Lancamentos"); 
 		// create a label to display text 
 		l = new JLabel("Selecione a opcao desejada:"); 
 
 		// create a new buttons 
-		btCli = new JButton("Cliente"); 
-		btProd = new JButton("Produto"); 
+		btOv = new JButton("Ordem de Venda"); 
+		btOs = new JButton("Ordem de Servico");
+		btCon = new JButton("Consultar Ordens");
 		btVol = new JButton("Voltar");
 
-		btCli.addActionListener(new ActionListener() {
+		btOv.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				f.setVisible(false);
-				new TelaCliente();
+				//f.setVisible(false);
+				//new TelaCliente();
 
 			}
 		});
-		
-		btProd.addActionListener(new ActionListener() {
+
+		btOs.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				f.setVisible(false);
-				new TelaProduto();
+				//f.setVisible(false);
+				new TelaOrdemServico();
 			}
 		});
 		
+		btCon.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//f.setVisible(false);
+				//new TelaProduto();
+			}
+		});
+
 		btVol.addActionListener(new ActionListener() {
 
 			@Override
@@ -62,15 +69,16 @@ public class TelaCadastros {
 
 			}
 		});
-		
+
 
 		// create a panel to add buttons 
 		JPanel p = new JPanel(); 
 		box = Box.createVerticalBox();
 		// add buttons and textfield to panel 
 		box.add(l); 
-		box.add(btCli); 
-		box.add(btProd); 
+		box.add(btOv); 
+		box.add(btOs);
+		box.add(btCon);
 		box.add(btVol);
 
 		p.add(box);
@@ -83,7 +91,5 @@ public class TelaCadastros {
 
 		f.show();
 
-	}
-
-
-}//tela cadastros
+	}//builder
+}//tela lancamentos
