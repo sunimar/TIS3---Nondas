@@ -8,6 +8,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
@@ -19,9 +21,10 @@ public class TelaOrdemServico extends JFrame {
 	GridBagConstraints c = new GridBagConstraints();
 	GridLayout grid;
 	/* Dados. */
-	JLabel jlData, jlCod,jlMarca, jlModelo, jlSerie, jlDef;
-	JTextField tfMarca, tfModelo, tfSerie;
+	JLabel jlData, jlCod,jlMarca, jlModelo, jlSerie, jlDef, jlVal;
+	JTextField tfMarca, tfModelo, tfSerie, tfVal;
 	JTextArea taDef;
+	JButton btVol, btSalvar;
 
 	public TelaOrdemServico() {
 		super("Ordem de Servico");
@@ -47,24 +50,53 @@ public class TelaOrdemServico extends JFrame {
 		/*************status**********/
 		JCheckBox [] arrayStatus = new JCheckBox[8];
 		arrayStatus[0] = new JCheckBox ("Sem Chip");
-		arrayStatus[1] = new JCheckBox ("Sem Chip");
-		arrayStatus[2] = new JCheckBox ("Sem Chip");
-		arrayStatus[3] = new JCheckBox ("Sem Chip");
-		arrayStatus[4] = new JCheckBox ("Sem Chip");
-		arrayStatus[5] = new JCheckBox ("Sem Chip");
-		arrayStatus[6] = new JCheckBox ("Sem Chip");
-		arrayStatus[7] = new JCheckBox ("Sem Chip");
+		arrayStatus[1] = new JCheckBox ("Sem Cartao de memória");
+		arrayStatus[2] = new JCheckBox ("Sem Bateria");
+		arrayStatus[3] = new JCheckBox ("Sem Tampa Traseira");
+		arrayStatus[4] = new JCheckBox ("Aparelho Nao Liga");
+		arrayStatus[5] = new JCheckBox ("Aparelho Queimou");
+		arrayStatus[6] = new JCheckBox ("Tela Quebrada");
+		arrayStatus[7] = new JCheckBox ("Tela Sem Funcionar");
 		for(JCheckBox jc : arrayStatus) {
 			status.add(jc);
 		}
 		/*************servicos***************/
+		JCheckBox [] arrayServicos = new JCheckBox[8];
+		arrayServicos[0] = new JCheckBox ("Limpeza");
+		arrayServicos[1] = new JCheckBox ("Troca de Bateria");
+		arrayServicos[2] = new JCheckBox ("Troca do Slot do Chip");
+		arrayServicos[3] = new JCheckBox ("Troca de Conector");
+		arrayServicos[4] = new JCheckBox ("Desoxidacao");
+		arrayServicos[5] = new JCheckBox ("Troca de Tela");
+		arrayServicos[6] = new JCheckBox ("Troca de Camera");
+		arrayServicos[7] = new JCheckBox ("Troca de Sensor de Digital");
+		for(JCheckBox jc : arrayServicos) {
+			servicos.add(jc);
+		}
+		jlVal = new JLabel("Valor Total: ");
+		tfVal = new JTextField(40);
+		btVol = new JButton("Cancelar e Voltar");
+		btSalvar = new JButton("Salvar Ordem de Servico");
+		servicos.add(jlVal);
+		servicos.add(tfVal);
+		servicos.add(btVol);
+		servicos.add(btSalvar);
+		
+		/**botoes**/
+		btVol.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+
+			}
+		});
 		/*****************declaracao final para construir a tela***********************************/
 		add(ui);
 		ui.add(dados);
 		ui.add(status);
 		ui.add(servicos);
 		
-
 		setSize(700,500);
 		setVisible(true);
 	}//builder
@@ -76,7 +108,7 @@ public class TelaOrdemServico extends JFrame {
 		c.weighty = 0;
 
 		ui = new JPanel(new BorderLayout(4,4));
-		ui.setBorder(new TitledBorder("Ordem de servico"));
+		ui.setBorder(new TitledBorder(""));
 		ui.setLayout(new GridLayout(0,3));
 
 		dados = new JPanel();
@@ -135,8 +167,5 @@ public class TelaOrdemServico extends JFrame {
 
 		ui.add(dados);
 	}
-
-
-
 
 }

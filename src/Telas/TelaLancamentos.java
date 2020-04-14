@@ -37,8 +37,8 @@ public class TelaLancamentos {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//f.setVisible(false);
-				//new TelaCliente();
+				f.setVisible(false);
+				new TelaOrdemVenda();
 
 			}
 		});
@@ -47,7 +47,7 @@ public class TelaLancamentos {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//f.setVisible(false);
+				f.setVisible(false);
 				new TelaOrdemServico();
 			}
 		});
