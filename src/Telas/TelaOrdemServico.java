@@ -3,6 +3,9 @@ package Telas;
 import javax.swing.JFrame;
 import javax.swing.border.TitledBorder;
 
+import Entidades.Cliente;
+import Entidades.OrdemServico;
+
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,9 +25,14 @@ public class TelaOrdemServico extends JFrame {
 	GridLayout grid;
 	/* Dados. */
 	JLabel jlData, jlCod,jlMarca, jlModelo, jlSerie, jlDef, jlVal;
+	public static JLabel jlCli = new JLabel();
+	public static Cliente cli;
+	JCheckBox [] arrayStatus;
+	JCheckBox [] arrayServicos;
+	OrdemServico os;
 	JTextField tfMarca, tfModelo, tfSerie, tfVal;
 	JTextArea taDef;
-	JButton btVol, btSalvar;
+	JButton btVol, btSalvar, btCli;
 
 	public TelaOrdemServico() {
 		super("Ordem de Servico");
@@ -36,9 +44,9 @@ public class TelaOrdemServico extends JFrame {
 		dados = new JPanel();
 		dados.setLayout(new GridBagLayout());
 		dados.setBorder(new TitledBorder("Dados"));
-		
+
 		dadosPanel();
-		
+
 		status = new JPanel();
 		status.setLayout(new BoxLayout(status, BoxLayout.Y_AXIS));
 		status.setBorder(new TitledBorder("Status do aperelho:"));
@@ -48,7 +56,7 @@ public class TelaOrdemServico extends JFrame {
 		/***************componentes internos de cada panel****************************************************/
 		/*************dados preenchidos no metodo dadosPanel******************/
 		/*************status**********/
-		JCheckBox [] arrayStatus = new JCheckBox[8];
+		arrayStatus = new JCheckBox[8];
 		arrayStatus[0] = new JCheckBox ("Sem Chip");
 		arrayStatus[1] = new JCheckBox ("Sem Cartao de memória");
 		arrayStatus[2] = new JCheckBox ("Sem Bateria");
@@ -61,7 +69,7 @@ public class TelaOrdemServico extends JFrame {
 			status.add(jc);
 		}
 		/*************servicos***************/
-		JCheckBox [] arrayServicos = new JCheckBox[8];
+		arrayServicos = new JCheckBox[8];
 		arrayServicos[0] = new JCheckBox ("Limpeza");
 		arrayServicos[1] = new JCheckBox ("Troca de Bateria");
 		arrayServicos[2] = new JCheckBox ("Troca do Slot do Chip");
@@ -73,34 +81,84 @@ public class TelaOrdemServico extends JFrame {
 		for(JCheckBox jc : arrayServicos) {
 			servicos.add(jc);
 		}
-		jlVal = new JLabel("Valor Total: ");
-		tfVal = new JTextField(40);
+		btCli = new JButton("Incluir Cliente");
+		jlCli = new JLabel("Ainda sem cliente");
 		btVol = new JButton("Cancelar e Voltar");
 		btSalvar = new JButton("Salvar Ordem de Servico");
-		servicos.add(jlVal);
-		servicos.add(tfVal);
+		servicos.add(btCli);
+		servicos.add(jlCli);
 		servicos.add(btVol);
 		servicos.add(btSalvar);
-		
+
 		/**botoes**/
 		btVol.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				TelaLancamentos.f.setVisible(true);
 				dispose();
+
+			}
+		});
+		
+		btCli.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new TelaCliente();
+
+			}
+		});
+		
+		btSalvar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				salvarOs();
 
 			}
 		});
 		/*****************declaracao final para construir a tela***********************************/
 		add(ui);
 		ui.add(dados);
-		ui.add(status);
 		ui.add(servicos);
-		
+		ui.add(status);
+
 		setSize(700,500);
 		setVisible(true);
 	}//builder
 
+	public void salvarOs() {
+		os = new OrdemServico();
+		os.setData(date);
+		os.setCodServ(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(date)));
+		
+		if(tfMarca.getText().isEmpty() || tfModelo.getText().isEmpty() || tfSerie.getText().isEmpty()
+			|| tfVal.getText().isEmpty() || taDef.getText().isEmpty() || cli==null) {
+			JOptionPane.showMessageDialog(null, " Preencha todos os campos corretamente! ");
+			return;
+		}
+		
+		for(JCheckBox jc : arrayStatus) {
+			if(jc.isSelected()) {
+				os.getStatus().add(jc.getText());
+			}
+		}
+		
+		for(JCheckBox jc : arrayServicos) {
+			if(jc.isSelected()) {
+				os.getServicos().add(jc.getText());
+			}
+		}
+		
+		if(os.getStatus().isEmpty() || os.getServicos().isEmpty()) {
+			JOptionPane.showMessageDialog(null, " Marque as caixas necessárias! ");
+			return;
+		}
+		
+		os.setCliente(cli);
+		
+		//dao OS//
+		System.out.println(os.toString());
+	}
+	
 	public void dadosPanel() {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(3,3,3,3);
@@ -116,7 +174,7 @@ public class TelaOrdemServico extends JFrame {
 		dados.setBorder(new TitledBorder("Dados"));
 
 		/* Fill Dados. */
-		Date date = new Date();
+		date = new Date();
 
 		jlData = new JLabel();
 		jlData.setText(new SimpleDateFormat("EEE, dd 'de' MMM 'de' yyyy, HH:mm").format(date));
@@ -131,6 +189,7 @@ public class TelaOrdemServico extends JFrame {
 		jlModelo   = new JLabel("Modelo: ");    tfModelo = new JTextField();
 		jlSerie    = new JLabel("Num Serie: "); tfSerie  = new JTextField();
 		jlDef      = new JLabel("Defeitos: ");  taDef    = new JTextArea();
+		jlVal = new JLabel("Valor Total: ");	tfVal = new JTextField(40);
 
 		c.gridx = 0; c.gridy = 2;
 		dados.add(jlMarca, c);
@@ -159,13 +218,22 @@ public class TelaOrdemServico extends JFrame {
 		c.gridwidth = 2;
 		c.weightx = 1;
 		c.weighty = 1;
-		
+
 		taDef.setLineWrap(true);
-		
+
 		JScrollPane spScroll = new JScrollPane(taDef);
 		dados.add(spScroll, c);
+		
+		c.weightx = 0;
+		c.weighty = 0;
+		
+		c.gridx = 0; c.gridy = 10;
+		dados.add(jlVal, c);
+
+		c.gridx = 0; c.gridy = 11;
+		dados.add(tfVal, c);
 
 		ui.add(dados);
 	}
 
-}
+}//class

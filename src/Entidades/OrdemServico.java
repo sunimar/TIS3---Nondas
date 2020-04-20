@@ -1,5 +1,6 @@
 package Entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,10 @@ public class OrdemServico {
 	private String defeitos;
 	private String obs;
 	
-	public OrdemServico() {}
+	public OrdemServico() {
+		status = new ArrayList<String>();
+		servicos = new ArrayList<String>();
+	}
 
 	public Date getData() {
 		return data;
@@ -106,6 +110,8 @@ public class OrdemServico {
 		this.obs = obs;
 	}
 	
-	
+	public String toString() {
+		return "Data: " + this.data.toString() + " " +this.codServ  + " " + this.cliente.getNome();
+	}
 	
 }

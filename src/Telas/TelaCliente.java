@@ -47,10 +47,11 @@ public class TelaCliente extends JFrame{
 		btVol 	   = new JButton("Voltar");
 
 		btVol.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TelaCadastros.f.setVisible(true);
+				if(TelaCadastros.f !=null && TelaCadastros.f.isVisible()==false) {
+					TelaCadastros.f.setVisible(true);
+				}
 				dispose();
 			}
 		});
@@ -60,10 +61,8 @@ public class TelaCliente extends JFrame{
 				try {
 					btCreate();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (ExcecaoValorDuplicado e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -211,7 +210,10 @@ public class TelaCliente extends JFrame{
 			JOptionPane.showMessageDialog(null, "Valor ja existente!");
 			return;
 		}
-
+		
+		TelaOrdemServico.cli = cli;
+		TelaOrdemServico.jlCli.setText("<html>Cliente: " + cli.getNome() + "<br>Telefone: " + cli.getTelefone() + "</hmtl>");
+		
 		JOptionPane.showMessageDialog(null, nome + " inserido com sucesso!");
 	}//create
 
@@ -229,6 +231,8 @@ public class TelaCliente extends JFrame{
 			tfFields[2].setText(cli.getEmail());
 			tfFields[3].setText(cli.getTelefone());
 
+			TelaOrdemServico.cli = cli;
+			TelaOrdemServico.jlCli.setText("<html>Cliente: " + cli.getNome() + "<br>Telefone: " + cli.getTelefone() + "</hmtl>");
 			btUpdate.setEnabled(true);
 			btDelete.setEnabled(true);
 		}else {
