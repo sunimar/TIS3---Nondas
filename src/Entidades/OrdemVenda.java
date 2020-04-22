@@ -5,10 +5,10 @@ import java.util.List;
 
 public class OrdemVenda {
 	private Date data;
-	private List<Produto> produtos;
-	private double valorTotal;
 	private long codVenda;
-	
+	private List<Produto> produtos;
+	private float valorTotal;
+
 	public OrdemVenda() {}
 
 	public Date getData() {
@@ -23,16 +23,20 @@ public class OrdemVenda {
 		return produtos;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setProduto(Produto prod) {
+		this.produtos.add(prod);
 	}
 
-	public double getValorTotal() {
-		return valorTotal;
+	public float getValorTotal() {
+		return this.valorTotal;
 	}
 
-	public void setValorTotal(double valorTotal) {
-		this.valorTotal = valorTotal;
+	public void setValorTotal(float valorTotal) {
+		float temp=0;
+		for(Produto prod : produtos) {
+			temp = temp + prod.getPrecoVenda();
+		}
+		this.valorTotal = temp;
 	}
 
 	public long getCodVenda() {
@@ -42,7 +46,7 @@ public class OrdemVenda {
 	public void setCodVenda(long codVenda) {
 		this.codVenda = codVenda;
 	}
-	
-	
-	
+
+
+
 }

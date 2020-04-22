@@ -99,7 +99,7 @@ public class TelaOrdemServico extends JFrame {
 
 			}
 		});
-		
+
 		btCli.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -107,7 +107,7 @@ public class TelaOrdemServico extends JFrame {
 
 			}
 		});
-		
+
 		btSalvar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -129,36 +129,36 @@ public class TelaOrdemServico extends JFrame {
 		os = new OrdemServico();
 		os.setData(date);
 		os.setCodServ(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(date)));
-		
+
 		if(tfMarca.getText().isEmpty() || tfModelo.getText().isEmpty() || tfSerie.getText().isEmpty()
-			|| tfVal.getText().isEmpty() || taDef.getText().isEmpty() || cli==null) {
+				|| tfVal.getText().isEmpty() || taDef.getText().isEmpty() || cli==null) {
 			JOptionPane.showMessageDialog(null, " Preencha todos os campos corretamente! ");
 			return;
 		}
-		
+
 		for(JCheckBox jc : arrayStatus) {
 			if(jc.isSelected()) {
-				os.getStatus().add(jc.getText());
+				os.setStatus(jc.getText());
 			}
 		}
-		
+
 		for(JCheckBox jc : arrayServicos) {
 			if(jc.isSelected()) {
-				os.getServicos().add(jc.getText());
+				os.setServico(jc.getText());
 			}
 		}
-		
+
 		if(os.getStatus().isEmpty() || os.getServicos().isEmpty()) {
 			JOptionPane.showMessageDialog(null, " Marque as caixas necessárias! ");
 			return;
 		}
-		
+
 		os.setCliente(cli);
-		
+
 		//dao OS//
 		System.out.println(os.toString());
 	}
-	
+
 	public void dadosPanel() {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(3,3,3,3);
@@ -223,10 +223,10 @@ public class TelaOrdemServico extends JFrame {
 
 		JScrollPane spScroll = new JScrollPane(taDef);
 		dados.add(spScroll, c);
-		
+
 		c.weightx = 0;
 		c.weighty = 0;
-		
+
 		c.gridx = 0; c.gridy = 10;
 		dados.add(jlVal, c);
 

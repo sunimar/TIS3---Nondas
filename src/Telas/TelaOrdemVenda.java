@@ -16,18 +16,19 @@ public class TelaOrdemVenda extends JFrame{
 
 	Date date;
 	JPanel ui, pvenda;
-	JButton btVol, btSalvar;
+	JButton btVol, btSalvar, btCalc;
+	JLabel jlData, jlCod, jlVal;
 	GridBagConstraints c = new GridBagConstraints();
 	GridLayout grid;
 
 
 	public TelaOrdemVenda() {
 		super("Ordem de Venda");
-		
+
 		ui = new JPanel(new BorderLayout(4,4));
 		ui.setBorder(new TitledBorder("Ordem de Venda"));
 		ui.setLayout(new GridLayout(0,3));
-		
+
 		pvenda = new JPanel();
 		pvenda.setLayout(new GridBagLayout());
 		pvenda.setBorder(new TitledBorder("Venda"));

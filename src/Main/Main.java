@@ -57,7 +57,7 @@ class TelaPrincipal extends JFrame{
 
 			}
 		});
-		
+
 		btLan.addActionListener(new ActionListener() {
 
 			@Override

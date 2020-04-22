@@ -16,7 +16,7 @@ public class OrdemServico {
 	private Cliente cliente;
 	private String defeitos;
 	private String obs;
-	
+
 	public OrdemServico() {
 		status = new ArrayList<String>();
 		servicos = new ArrayList<String>();
@@ -66,16 +66,16 @@ public class OrdemServico {
 		return status;
 	}
 
-	public void setStatus(List<String> status) {
-		this.status = status;
+	public void setStatus(String status) {
+		this.status.add(status);
 	}
 
 	public List<String> getServicos() {
 		return servicos;
 	}
 
-	public void setServicos(List<String> servicos) {
-		this.servicos = servicos;
+	public void setServico(String servico) {
+		this.servicos.add(servico);
 	}
 
 	public double getValorTotal() {
@@ -109,9 +109,9 @@ public class OrdemServico {
 	public void setObs(String obs) {
 		this.obs = obs;
 	}
-	
+
 	public String toString() {
 		return "Data: " + this.data.toString() + " " +this.codServ  + " " + this.cliente.getNome();
 	}
-	
+
 }

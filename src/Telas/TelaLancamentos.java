@@ -51,7 +51,7 @@ public class TelaLancamentos {
 				new TelaOrdemServico();
 			}
 		});
-		
+
 		btCon.addActionListener(new ActionListener() {
 
 			@Override
