@@ -11,7 +11,7 @@ import java.util.List;
 
 import Entidades.Cliente;
 
-public class CadastroClienteDAO implements DAO<Cliente, Long> {
+public class CadastroClienteDAO implements DAO<Cliente, String> {
 
 	private List<Cliente> clientes;
 	private File file;
@@ -27,22 +27,22 @@ public class CadastroClienteDAO implements DAO<Cliente, Long> {
 
 	@Override
 	public void add(Cliente cli) throws ExcecaoValorDuplicado{
-
+		
 		for (Cliente busca : clientes) {
 			if (cli.getCpfCnpj() == busca.getCpfCnpj()) {
 				throw new ExcecaoValorDuplicado("O CpfCnpj: ", cli.getCpfCnpj());
 			}
-
-		}
+			
+			}
 		clientes.add(cli);
-		saveToFile();
-
+		saveToFile();	
+		
 	}
 
 	@Override
-	public Cliente get(Long chave) {
+	public Cliente get(String chave) {
 		for (Cliente cli : clientes) {
-			if (chave.longValue() == cli.getCpfCnpj()) {
+			if (Long.parseLong(chave) == cli.getCpfCnpj()) {
 				return cli;
 			}
 		}
@@ -58,7 +58,14 @@ public class CadastroClienteDAO implements DAO<Cliente, Long> {
 
 	@Override
 	public void update(Cliente cli) {
-		int index = clientes.indexOf(cli);
+		int index = -1;
+		
+		for (Cliente tes : clientes) {
+			if(tes.getCpfCnpj() == cli.getCpfCnpj()) {
+				index = clientes.indexOf(tes);
+				break;
+			}
+		}
 		if (index != -1) {
 			clientes.set(index, cli);
 			saveToFile();
@@ -67,7 +74,15 @@ public class CadastroClienteDAO implements DAO<Cliente, Long> {
 
 	@Override
 	public void remove(Cliente cli) {
-		int index = clientes.indexOf(cli);
+		int index = -1;
+		
+		for (Cliente tes : clientes) {
+			if(tes.getCpfCnpj() == cli.getCpfCnpj()) {
+				index = clientes.indexOf(tes);
+				break;
+			}
+		}
+		
 		if (index != -1) {
 			clientes.remove(index);
 		}

@@ -33,7 +33,7 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 	}
 
-	public float getCpfCnpj() {
+	public long getCpfCnpj() {
 		return cpfCnpj;
 	}
 
@@ -69,6 +69,10 @@ public class Cliente implements Serializable {
 
 	public void print() {
 		System.out.println(this.nome + " " + this.cpfCnpj + " " + this.email + " " + this.telefone);
+	}
+	
+	public String toString() {
+		return ("Nome: " + this.nome + " - CPF: " + this.cpfCnpj);
 	}
 
 

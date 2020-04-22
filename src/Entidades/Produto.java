@@ -1,15 +1,18 @@
 package Entidades;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Produto{
-	private Integer idProduto;
+public class Produto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Long idProduto;
 	private String nome;
 	private float precoCompra;
 	private float precoVenda;
 	//private Random random = new Random(); 
 
-	public Produto(Integer idProduto, String nome, float precoCompra, float precoVenda) throws ExcecaoValorInvalido {
+	public Produto(Long idProduto, String nome, float precoCompra, float precoVenda) throws ExcecaoValorInvalido {
 		this.setIdProduto(idProduto);
 		this.setNome(nome);
 		this.setPrecoCompra(precoCompra);
@@ -22,11 +25,11 @@ public class Produto{
 		return nome;
 	}
 
-	public int getIdProduto() {
+	public Long getIdProduto() {
 		return idProduto;
 	}
 
-	public void setIdProduto(Integer idProduto) {
+	public void setIdProduto(Long idProduto) {
 		this.idProduto = idProduto;
 	}
 

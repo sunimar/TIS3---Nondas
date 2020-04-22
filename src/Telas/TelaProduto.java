@@ -50,8 +50,8 @@ public class TelaProduto extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				//this.dispose();
+				TelaCadastros.f.setVisible(true);
+				dispose();
 			}
 		});
 
@@ -80,20 +80,30 @@ public class TelaProduto extends JFrame{
 		btUpdate.setEnabled(false);
 		btUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//btUpdate();
+				try {
+					btUpdate();
+				} catch (NumberFormatException | IOException | ExcecaoValorInvalido e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
 		btDelete.setEnabled(false);
 		btDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//btDelete();
+				try {
+					btDelete();
+				} catch (NumberFormatException | IOException | ExcecaoValorInvalido e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
 		btShow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//btShow();
+				btShow();
 			}
 		});
 
@@ -158,8 +168,7 @@ public class TelaProduto extends JFrame{
 		spScroll.setPreferredSize(new Dimension(400, 400));
 
 		taText.setText("");
-		try
-		{
+		try{
 			List<Produto> p = proDAO.getAll();
 			for (Produto a : p)
 				taText.append(a + "\n");
@@ -167,8 +176,8 @@ public class TelaProduto extends JFrame{
 
 		panel.add(spScroll);
 		UIManager.put("OptionPane.minimumSize",new Dimension(400, 400));
-		JOptionPane.showMessageDialog(null, panel, "Alunos", JOptionPane.PLAIN_MESSAGE);
-	}
+		JOptionPane.showMessageDialog(null, panel, "Produtos", JOptionPane.PLAIN_MESSAGE);
+	}//show
 
 
 	public void btCreate()throws IOException, NumberFormatException, ExcecaoValorInvalido{
@@ -184,7 +193,7 @@ public class TelaProduto extends JFrame{
 		}
 
 		Produto prod = new Produto();
-		prod.setIdProduto(Integer.parseInt(id));
+		prod.setIdProduto(Long.parseLong(id));
 		prod.setNome(nome);
 		prod.setPrecoCompra(Float.parseFloat(preCom));
 		prod.setPrecoVenda(Float.parseFloat(preVen));
@@ -201,8 +210,8 @@ public class TelaProduto extends JFrame{
 		while (id.equals(""))
 			id = JOptionPane.showInputDialog("Digite o ID do produto");
 
-		Produto prod = proDAO.get(Integer.parseInt(id));
-
+		Produto prod = proDAO.get(id);
+		if(prod != null) {
 		tfFields[0].setText(id);
 		tfFields[1].setText(prod.getNome());
 		tfFields[2].setText(String.valueOf(prod.getPrecoCompra()));
@@ -210,6 +219,9 @@ public class TelaProduto extends JFrame{
 
 		btUpdate.setEnabled(true);
 		btDelete.setEnabled(true);
+		}else {
+			JOptionPane.showMessageDialog(null, "Produto inexistente!");
+		}
 	}//retrieve
 
 	public void btUpdate() throws IOException, NumberFormatException, ExcecaoValorInvalido{
@@ -225,7 +237,7 @@ public class TelaProduto extends JFrame{
 		}
 
 		Produto prod = new Produto();
-		prod.setIdProduto(Integer.parseInt(id));
+		prod.setIdProduto(Long.parseLong(id));
 		prod.setNome(nome);
 		prod.setPrecoCompra(Float.parseFloat(preCom));
 		prod.setPrecoVenda(Float.parseFloat(preVen));
@@ -249,7 +261,7 @@ public class TelaProduto extends JFrame{
 		}
 
 		Produto prod = new Produto();
-		prod.setIdProduto(Integer.parseInt(id));
+		prod.setIdProduto(Long.parseLong(id));
 		prod.setNome(nome);
 		prod.setPrecoCompra(Float.parseFloat(preCom));
 		prod.setPrecoVenda(Float.parseFloat(preVen));
