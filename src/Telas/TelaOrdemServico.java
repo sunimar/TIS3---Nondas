@@ -3,6 +3,8 @@ package Telas;
 import javax.swing.JFrame;
 import javax.swing.border.TitledBorder;
 
+import DAO.CadastroClienteDAO;
+import DAO.ServicoDAO;
 import Entidades.Cliente;
 import Entidades.OrdemServico;
 
@@ -13,12 +15,13 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
 
 public class TelaOrdemServico extends JFrame {
-
+	public static ServicoDAO servicoDAO;
 	JPanel ui, dados,status,servicos;
 	Date date;
 	GridBagConstraints c = new GridBagConstraints();
@@ -111,7 +114,11 @@ public class TelaOrdemServico extends JFrame {
 		btSalvar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				salvarOs();
+				try {
+					salvarOs();
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
 
 			}
 		});
@@ -125,7 +132,7 @@ public class TelaOrdemServico extends JFrame {
 		setVisible(true);
 	}//builder
 
-	public void salvarOs() {
+	public void salvarOs() throws IOException {
 		os = new OrdemServico();
 		os.setData(date);
 		os.setCodServ(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(date)));
@@ -134,6 +141,12 @@ public class TelaOrdemServico extends JFrame {
 			|| tfVal.getText().isEmpty() || taDef.getText().isEmpty() || cli==null) {
 			JOptionPane.showMessageDialog(null, " Preencha todos os campos corretamente! ");
 			return;
+
+			//Método para salvar a OS
+			try{
+				servicoDAO = new ServicoDAO("ServicoDao");
+			} catch(Exception ex) {ex.printStackTrace();}
+
 		}
 		
 		for(JCheckBox jc : arrayStatus) {
