@@ -1,10 +1,13 @@
 package Entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class OrdemServico {
+public class OrdemServico implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private Date data;
 	private long codServ;
 	private String marca;

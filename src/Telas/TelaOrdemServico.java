@@ -21,7 +21,7 @@ import java.util.Date;
 import javax.swing.*;
 
 public class TelaOrdemServico extends JFrame {
-	public static ServicoDAO servicoDAO;
+	ServicoDAO servicoDAO;
 	JPanel ui, dados,status,servicos;
 	Date date;
 	GridBagConstraints c = new GridBagConstraints();
@@ -52,7 +52,7 @@ public class TelaOrdemServico extends JFrame {
 
 		status = new JPanel();
 		status.setLayout(new BoxLayout(status, BoxLayout.Y_AXIS));
-		status.setBorder(new TitledBorder("Status do aperelho:"));
+		status.setBorder(new TitledBorder("Status do aparelho:"));
 		servicos = new JPanel();
 		servicos.setLayout(new BoxLayout(servicos, BoxLayout.Y_AXIS));
 		servicos.setBorder(new TitledBorder("Servicos a serem feitos:"));
@@ -141,12 +141,6 @@ public class TelaOrdemServico extends JFrame {
 				|| tfVal.getText().isEmpty() || taDef.getText().isEmpty() || cli==null) {
 			JOptionPane.showMessageDialog(null, " Preencha todos os campos corretamente! ");
 			return;
-
-			//Método para salvar a OS
-			try{
-				servicoDAO = new ServicoDAO("ServicoDao");
-			} catch(Exception ex) {ex.printStackTrace();}
-
 		}
 
 		for(JCheckBox jc : arrayStatus) {
@@ -169,6 +163,8 @@ public class TelaOrdemServico extends JFrame {
 		os.setCliente(cli);
 
 		//dao OS//
+		servicoDAO = new ServicoDAO("ServicoDAO");
+		servicoDAO.add(os);
 		System.out.println(os.toString());
 	}
 

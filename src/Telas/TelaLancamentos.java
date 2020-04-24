@@ -2,6 +2,7 @@ package Telas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -38,7 +39,11 @@ public class TelaLancamentos {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				f.setVisible(false);
-				new TelaOrdemVenda();
+				try {
+					new TelaOrdemVenda();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 
 			}
 		});

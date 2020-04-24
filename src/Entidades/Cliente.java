@@ -6,7 +6,6 @@ import java.util.Random;
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	//private int codCli;
 	private String nome;
 	private long cpfCnpj;
 	private String email;
@@ -70,7 +69,7 @@ public class Cliente implements Serializable {
 	public void print() {
 		System.out.println(this.nome + " " + this.cpfCnpj + " " + this.email + " " + this.telefone);
 	}
-	
+
 	public String toString() {
 		return ("Nome: " + this.nome + " - CPF: " + this.cpfCnpj);
 	}
