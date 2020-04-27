@@ -40,7 +40,7 @@ public class TelaOrdemVenda extends JFrame{
 	public TelaOrdemVenda() throws IOException {
 		super("Ordem de Venda");
 		prodDAO = new ProdutoDAO("ProdutoDAO");
-		
+
 		ui = new JPanel(new BorderLayout(4,4));
 		ui.setBorder(new TitledBorder(""));
 		ui.setLayout(new GridLayout(0,2));
@@ -48,78 +48,119 @@ public class TelaOrdemVenda extends JFrame{
 		jpVenda = new JPanel();
 		jpVenda.setLayout(new GridBagLayout());
 		jpVenda.setBorder(new TitledBorder("Dados"));
-		
+
 		/*dados da venda*/
 		dadosPanel();
 		/*-------------------------------------------*/
-		
+
 		jpProd = new JPanel();
 		jpProd.setLayout(new BoxLayout(jpProd, BoxLayout.Y_AXIS));
 		jpProd.setBorder(new TitledBorder("Produtos:"));
 
 		listModelCarrinho = new DefaultListModel();
 		carrinho = new JList<Produto>(listModelCarrinho);
-		
-		
+
+
 
 		/*----------------- botoes------------*/
+		btSalvar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				salvarOv();
+			}
+		});
 		
-		btAddProd.addActionListener(new ActionListener() {
+		btRemProd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				remProd();
+			}
+		});
 
+		btAddProd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				addProd();
-
 			}
 		});
-		
-		btVol.addActionListener(new ActionListener() {
 
+		btVol.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-
 			}
 		});
-		
+
 		jpProd.add(carrinho);
 		ui.add(jpProd);
 		add(ui);
-		
+
 		setSize(700,500);
 		setVisible(true);
 	}//builder
 	
+	public void salvarOv() {
+		OrdemVenda ov = new OrdemVenda();
+		
+		ov.setData(date);
+		ov.setCodVenda(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(date)));
+		
+		List<Produto> produtos = null;
+		
+		for(int i=0; i<listModelCarrinho.getSize(); i++) {
+			
+		}
+		
+		//ov.setValorTotal();
+		System.out.println(ov.toString());
+	}//salvar
+
+	public void remProd() {
+		
+		prod = (Produto) carrinho.getSelectedValue();
+		
+		preco = preco - prod.getPrecoVenda();
+		
+		String nome = prod.getNome();
+		
+		listModelCarrinho.removeElement(prod);
+
+		jlVal.setText("Valor Total: " + preco);
+		
+		JOptionPane.showMessageDialog(null, nome + " removido! ");
+
+	}//rem prod
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addProd() {
 		jpEstoque = new JPanel();
-		
+
 		listModelEstoque = new DefaultListModel();
 		estoque = new JList<Produto>(listModelEstoque);
 
 		List<Produto> produtos = prodDAO.getAll();
-		
+
 		for(Produto i : produtos) {
 			listModelEstoque.addElement(i);
 		}
 		jpEstoque.add(estoque);
-		
+
 		JOptionPane.showMessageDialog(null,jpEstoque,"Estoque de Produtos",JOptionPane.INFORMATION_MESSAGE);
 		List<Produto> produtosCarrinho = estoque.getSelectedValuesList();
-		
+
 		while(produtosCarrinho.isEmpty()) {
 			JOptionPane.showMessageDialog(null,"Selecione ao menos UM produto!");
 			JOptionPane.showMessageDialog(null,jpEstoque,"Estoque de Produtos",JOptionPane.INFORMATION_MESSAGE);
 			produtosCarrinho = estoque.getSelectedValuesList();
 		}
-		
+
 		for(Produto i : produtosCarrinho) {
 			listModelCarrinho.addElement(i);
 			preco += i.getPrecoVenda();
 		}
 		jlVal.setText("Valor Total: " + preco);
 		carrinho.setModel(listModelCarrinho);
-		
+
 	}//addprod
 
 	public void dadosPanel() {
@@ -138,7 +179,7 @@ public class TelaOrdemVenda extends JFrame{
 		btRemProd = new JButton("Remover Produto");
 		btVol = new JButton("Cancelar e Voltar");
 		btSalvar = new JButton("Salvar Ordem de Venda");
-		
+
 		c.gridx = 0; c.gridy = 0;
 		jpVenda.add(jlData, c);
 		c.gridx = 0; c.gridy = 1;
@@ -155,14 +196,14 @@ public class TelaOrdemVenda extends JFrame{
 
 		c.gridx = 0; c.gridy = 4;
 		jpVenda.add(jlVal, c);
-		
+
 		c.gridx = 0; c.gridy = 5;
 		jpVenda.add(btSalvar, c);
-		
+
 		c.gridx = 0; c.gridy = 6;
 		jpVenda.add(btVol, c);
 
 		ui.add(jpVenda);
 	}
-	
+
 }//class

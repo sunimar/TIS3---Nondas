@@ -31,7 +31,7 @@ public class OrdemVenda {
 		return this.valorTotal;
 	}
 
-	public void setValorTotal(float valorTotal) {
+	public void setValorTotal() {
 		float temp=0;
 		for(Produto prod : produtos) {
 			temp = temp + prod.getPrecoVenda();
@@ -47,6 +47,8 @@ public class OrdemVenda {
 		this.codVenda = codVenda;
 	}
 
-
+	public String toString() {
+		return "Data: " + " " + this.data.toString() + " " + this.codVenda + " " +  this.valorTotal;
+	}
 
 }
