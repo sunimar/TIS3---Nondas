@@ -1,5 +1,6 @@
 package Telas;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import DAO.ServicoDAO;
 import Entidades.OrdemServico;
@@ -37,8 +39,8 @@ public class TelaLancamentos {
 		l = new JLabel("Selecione a opcao desejada:"); 
 
 		// create a new buttons 
-		btOv = new JButton("Ordem de Venda"); 
-		btOs = new JButton("Ordem de Servico");
+		btOv = new JButton("Nova Ordem de Venda"); 
+		btOs = new JButton("Nova Ordem de Servico");
 		btConOs = new JButton("Consultar Ordens de Serviço");
 		btConOv = new JButton("Consultar Ordens de Venda");
 		btVol = new JButton("Voltar");
@@ -126,7 +128,10 @@ public class TelaLancamentos {
 		ServicoDAO serv = new ServicoDAO("ServicoDAO");
 		
 		JPanel jpOrdens = new JPanel();
-
+		jpOrdens.setSize(new Dimension(200, 200));
+		JScrollPane scrollpane = new JScrollPane(); 
+		
+		
 		DefaultListModel listModelOrdens = new DefaultListModel();
 		JList jlOrdens = new JList<Produto>(listModelOrdens);
 
@@ -135,13 +140,14 @@ public class TelaLancamentos {
 		for(OrdemServico i : ordens) {
 			listModelOrdens.addElement(i);
 		}
-		jpOrdens.add(jlOrdens);
-
-		JOptionPane.showMessageDialog(null,jpOrdens,"Ordens de Serviço",JOptionPane.INFORMATION_MESSAGE);
+		scrollpane = new JScrollPane(jlOrdens);
+		jpOrdens.add(scrollpane);
+		scrollpane.getViewport().add(jlOrdens);
+		
+		JOptionPane.showMessageDialog(null,scrollpane,"Ordens de Serviço",JOptionPane.INFORMATION_MESSAGE);
 		OrdemServico os = (OrdemServico) jlOrdens.getSelectedValue();
 		
 		if(os != null) {
-			//System.out.println("works");
 			TelaOrdemServico.os=os;
 			System.out.println(os.toString());
 			new TelaOrdemServico();

@@ -15,19 +15,22 @@ import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+
+import Entidades.OrdemServico;
 import Entidades.OrdemVenda;
 import Entidades.Produto;
 import DAO.ProdutoDAO;
 
 @SuppressWarnings("serial")
 public class TelaOrdemVenda extends JFrame{
-
+	//instanciar dao venda
+	public static OrdemVenda ov = null;
 	Date date;
 	float preco = 0;
 	Produto prod;
 	ProdutoDAO prodDAO;
 	JPanel ui, jpVenda, jpProd, jpEstoque;
-	JButton btVol, btSalvar, btAddProd, btRemProd;
+	JButton btVol, btSalvar, btDel, btAddProd, btRemProd;
 	JLabel jlData, jlCod, jlVal;
 	@SuppressWarnings("rawtypes")
 	JList carrinho, estoque;
@@ -40,6 +43,14 @@ public class TelaOrdemVenda extends JFrame{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public TelaOrdemVenda() throws IOException {
 		super("Ordem de Venda");
+		if(ov==null) {
+			System.out.println("nova ov");
+			ov = new OrdemVenda();
+		}else {
+			System.out.println("alteração de ov");
+			//metodo que constroi o carrinho de acordo com o dao venda
+		}
+		
 		prodDAO = new ProdutoDAO("ProdutoDAO");
 
 		ui = new JPanel(new BorderLayout(4,4));
@@ -71,6 +82,13 @@ public class TelaOrdemVenda extends JFrame{
 			}
 		});
 		
+		btDel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//criar metodo de remoção
+			}
+		});
+		
 		btRemProd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -88,6 +106,8 @@ public class TelaOrdemVenda extends JFrame{
 		btVol.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				ov = null;
+				TelaLancamentos.f.setVisible(true);
 				dispose();
 			}
 		});
@@ -101,9 +121,7 @@ public class TelaOrdemVenda extends JFrame{
 	}//builder
 	
 	public void salvarOv() {
-		OrdemVenda ov = new OrdemVenda();
-		
-		ov.setData(date);
+		//long oldCod = ov.getCodVenda();
 		ov.setCodVenda(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(date)));
 		
 		Produto [] carrinho = null;
@@ -117,7 +135,18 @@ public class TelaOrdemVenda extends JFrame{
 		
 		ov.setValorTotal();
 		//dao venda//
+		/*
+		if(oldCod == 0) {
+			//servicoDAO.add(os);
+			JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " salvo com sucesso!");
+		}else {
+			JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " alterado com sucesso!");
+			//servicoDAO.update(os);
+		}*/
+		//
 		System.out.println(ov.toString());
+		TelaLancamentos.f.setVisible(true);
+		dispose();
 	}//salvar
 
 	public void remProd() {
@@ -178,20 +207,24 @@ public class TelaOrdemVenda extends JFrame{
 		date = new Date();
 
 		jlData = new JLabel();
-		jlData.setText(new SimpleDateFormat("EEE, dd 'de' MMM 'de' yyyy, HH:mm").format(date));
-		jlCod = new JLabel("Numero: " + new SimpleDateFormat("yyyyMMddHHmmss").format(date));
+		jlData.setText(new SimpleDateFormat("EEE, dd 'de' MMM 'de' yyyy, HH:mm").format(ov.getData()));
+		jlCod = new JLabel("Numero: " + new SimpleDateFormat("yyyyMMddHHmmss").format(ov.getData()));
 		btAddProd = new JButton("Incluir Produto");
 		btRemProd = new JButton("Remover Produto");
 		btVol = new JButton("Cancelar e Voltar");
 		btSalvar = new JButton("Salvar Ordem de Venda");
-
+		btDel = new JButton("Deletar Ordem de Venda");
+		if(ov.getCodVenda()==0) {
+			btDel.setEnabled(false);
+		}
+		
 		c.gridx = 0; c.gridy = 0;
 		jpVenda.add(jlData, c);
 		c.gridx = 0; c.gridy = 1;
 		jpVenda.add(jlCod, c);
 
 
-		jlVal = new JLabel("Valor Total: ");
+		jlVal = new JLabel("Valor Total: " + ov.getValorTotal());
 
 		c.gridx = 0; c.gridy = 2;
 		jpVenda.add(btAddProd, c);
@@ -206,6 +239,9 @@ public class TelaOrdemVenda extends JFrame{
 		jpVenda.add(btSalvar, c);
 
 		c.gridx = 0; c.gridy = 6;
+		jpVenda.add(btDel, c);
+		
+		c.gridx = 0; c.gridy = 7;
 		jpVenda.add(btVol, c);
 
 		ui.add(jpVenda);

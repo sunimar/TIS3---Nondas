@@ -103,7 +103,12 @@ public class TelaProduto extends JFrame{
 
 		btShow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btShow();
+				try {
+					btShow();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -157,7 +162,8 @@ public class TelaProduto extends JFrame{
 		show();
 	}
 
-	public void btShow(){
+	public void btShow() throws IOException{
+		proDAO = new ProdutoDAO("ProdutoDAO");
 		JPanel panel = new JPanel();
 		panel.setSize(new Dimension(400, 400));
 

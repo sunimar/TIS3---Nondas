@@ -7,10 +7,15 @@ import java.util.List;
 public class OrdemVenda {
 	private Date data;
 	private long codVenda;
-	private List<Produto> produtos = new ArrayList<Produto>();
+	private List<Produto> produtos;
 	private float valorTotal;
 
-	public OrdemVenda() {}
+	public OrdemVenda() {
+		data = new Date();
+		codVenda = 0;
+		produtos = new ArrayList<Produto>();
+		valorTotal = 0;
+	}
 
 	public Date getData() {
 		return data;

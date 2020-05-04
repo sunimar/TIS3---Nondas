@@ -10,7 +10,6 @@ public class Produto implements Serializable {
 	private String nome;
 	private float precoCompra;
 	private float precoVenda;
-	//private Random random = new Random(); 
 
 	public Produto(Long idProduto, String nome, float precoCompra, float precoVenda) throws ExcecaoValorInvalido {
 		this.setIdProduto(idProduto);
@@ -64,7 +63,7 @@ public class Produto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Cod " + " " + idProduto +"Nome: " + nome + " " + " Preco: " + precoVenda;
+		return " Cod " + " " + idProduto +" Nome: " + nome + " " + " Preco: " + precoVenda;
 	}
 
 	public void print() {

@@ -40,13 +40,13 @@ public class TelaOrdemServico extends JFrame {
 		super("Ordem de Servico");
 		/***********panels iniciais*****************************/
 		if(os==null) {
-			System.out.println("if");
+			System.out.println("nova os");
 			os = new OrdemServico();
 		}else {
-			System.out.println("else");
+			System.out.println("alteração de os");
 		}
 		ui = new JPanel(new BorderLayout(4,4));
-		ui.setBorder(new TitledBorder("Ordem de servico"));
+		ui.setBorder(new TitledBorder("Ordem de Serviço"));
 		ui.setLayout(new GridLayout(0,3));
 
 		dados = new JPanel();
@@ -126,6 +126,7 @@ public class TelaOrdemServico extends JFrame {
 		btVol.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				os = null;
 				TelaLancamentos.f.setVisible(true);
 				dispose();
 			}
@@ -172,9 +173,8 @@ public class TelaOrdemServico extends JFrame {
 
 	public void deletarOs()throws IOException {
 		servicoDAO = new ServicoDAO("ServicoDAO");
-		
 		servicoDAO.remove(os);
-		JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ "excluido com sucesso!");
+		JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " excluido com sucesso!");
 		os = null;
 		TelaLancamentos.f.setVisible(true);
 		dispose();
@@ -186,7 +186,7 @@ public class TelaOrdemServico extends JFrame {
 		os.setCodServ(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(os.getData())));
 
 		if(tfMarca.getText().isEmpty() || tfModelo.getText().isEmpty() || tfSerie.getText().isEmpty()
-				|| tfVal.getText().isEmpty() || taDef.getText().isEmpty() || cli==null) {
+				|| Double.parseDouble(tfVal.getText().toString())==0 || taDef.getText().isEmpty() || cli==null) {
 			JOptionPane.showMessageDialog(null, " Preencha todos os campos corretamente! ");
 			return;
 		}
@@ -224,7 +224,6 @@ public class TelaOrdemServico extends JFrame {
 			JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " alterado com sucesso!");
 			servicoDAO.update(os);
 		}
-		//System.out.println(os.toString());
 		os = null;
 		TelaLancamentos.f.setVisible(true);
 		dispose();

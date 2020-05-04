@@ -25,8 +25,6 @@ public class Cliente implements Serializable {
 		setNome(nome);
 		setEmail(email);
 		setTelefone(telefone);
-		//setCodCli();
-
 	}
 
 	public String getNome() {
@@ -52,16 +50,6 @@ public class Cliente implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	/*
-	public int getCodCli() {
-		return codCli;
-	}
-
-	public void setCodCli() {
-		this.codCli = random.nextInt(1000);
-	}
-	 */
 
 	public String getTelefone() {
 		return telefone;

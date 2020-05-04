@@ -62,7 +62,6 @@ public class ServicoDAO implements DAO<OrdemServico, String> {
 		}
 		
 		if (index != -1) {
-			System.out.println("cheguei" + index);
 			ordemServicos.set(index, os);
 			saveToFile();
 		}
