@@ -1,12 +1,13 @@
 package Entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class OrdemVenda {
 	private Date data;
 	private long codVenda;
-	private List<Produto> produtos;
+	private List<Produto> produtos = new ArrayList<Produto>();
 	private float valorTotal;
 
 	public OrdemVenda() {}

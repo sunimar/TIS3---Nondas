@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -105,13 +106,17 @@ public class TelaOrdemVenda extends JFrame{
 		ov.setData(date);
 		ov.setCodVenda(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(date)));
 		
-		List<Produto> produtos = null;
+		Produto [] carrinho = null;
 		
-		for(int i=0; i<listModelCarrinho.getSize(); i++) {
-			
+		carrinho = Arrays.stream(listModelCarrinho.toArray()).map(Produto.class::cast).toArray(Produto[]::new);
+		
+		for(int i=0; i<carrinho.length; i++) {
+			System.out.println(carrinho[i].getNome());
+			ov.setProduto(carrinho[i]);
 		}
 		
-		//ov.setValorTotal();
+		ov.setValorTotal();
+		//dao venda//
 		System.out.println(ov.toString());
 	}//salvar
 

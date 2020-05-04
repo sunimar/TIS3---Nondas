@@ -27,8 +27,8 @@ public class ServicoDAO implements DAO<OrdemServico, String> {
 	}
 
 	@Override
-	public void add(OrdemServico cooperativa) {
-		ordemServicos.add(cooperativa);
+	public void add(OrdemServico os) {
+		ordemServicos.add(os);
 		saveToFile();
 	}
 
@@ -36,11 +36,11 @@ public class ServicoDAO implements DAO<OrdemServico, String> {
 	public OrdemServico get(String chave) {
 		for (OrdemServico serv : ordemServicos) {
 			if (Long.parseLong(chave) == serv.getCodServ()) {
+				System.out.println(serv.getCodServ());
 				return serv;
 			}
 		}
 		return null;
-
 	}
 
 	@Override
@@ -62,6 +62,7 @@ public class ServicoDAO implements DAO<OrdemServico, String> {
 		}
 		
 		if (index != -1) {
+			System.out.println("cheguei" + index);
 			ordemServicos.set(index, os);
 			saveToFile();
 		}

@@ -21,8 +21,17 @@ public class OrdemServico implements Serializable{
 	private String obs;
 
 	public OrdemServico() {
+		data = new Date();
+		codServ = 0;
+		marca = "";
+		modelo = "";
+		numSerie = "";
 		status = new ArrayList<String>();
 		servicos = new ArrayList<String>();
+		valorTotal = 0;
+		cliente = new Cliente();
+		defeitos = "";
+		obs = "";
 	}
 
 	public Date getData() {

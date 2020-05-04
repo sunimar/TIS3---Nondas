@@ -3,19 +3,27 @@ package Telas;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.Box;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import DAO.ServicoDAO;
+import Entidades.OrdemServico;
+import Entidades.Produto;
 
 public class TelaLancamentos {
 	// JFrame 
 	static JFrame f; 
 
 	// JButton 
-	static JButton btOv, btOs, btCon, btVol; 
+	static JButton btOv, btOs, btConOs, btConOv, btVol; 
 
 	// label to display text 
 	static JLabel l;
@@ -31,7 +39,8 @@ public class TelaLancamentos {
 		// create a new buttons 
 		btOv = new JButton("Ordem de Venda"); 
 		btOs = new JButton("Ordem de Servico");
-		btCon = new JButton("Consultar Ordens");
+		btConOs = new JButton("Consultar Ordens de Serviço");
+		btConOv = new JButton("Consultar Ordens de Venda");
 		btVol = new JButton("Voltar");
 
 		btOv.addActionListener(new ActionListener() {
@@ -57,7 +66,7 @@ public class TelaLancamentos {
 			}
 		});
 
-		btCon.addActionListener(new ActionListener() {
+		btConOv.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -65,6 +74,20 @@ public class TelaLancamentos {
 				//new TelaProduto();
 			}
 		});
+		
+		btConOs.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					consultaOs();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}		
+			}
+		});
+
 
 		btVol.addActionListener(new ActionListener() {
 
@@ -83,7 +106,8 @@ public class TelaLancamentos {
 		box.add(l); 
 		box.add(btOv); 
 		box.add(btOs);
-		box.add(btCon);
+		box.add(btConOv);
+		box.add(btConOs);
 		box.add(btVol);
 
 		p.add(box);
@@ -97,4 +121,32 @@ public class TelaLancamentos {
 		f.show();
 
 	}//builder
+	
+	public void consultaOs() throws IOException {
+		ServicoDAO serv = new ServicoDAO("ServicoDAO");
+		
+		JPanel jpOrdens = new JPanel();
+
+		DefaultListModel listModelOrdens = new DefaultListModel();
+		JList jlOrdens = new JList<Produto>(listModelOrdens);
+
+		List<OrdemServico> ordens = serv.getAll();
+
+		for(OrdemServico i : ordens) {
+			listModelOrdens.addElement(i);
+		}
+		jpOrdens.add(jlOrdens);
+
+		JOptionPane.showMessageDialog(null,jpOrdens,"Ordens de Serviço",JOptionPane.INFORMATION_MESSAGE);
+		OrdemServico os = (OrdemServico) jlOrdens.getSelectedValue();
+		
+		if(os != null) {
+			//System.out.println("works");
+			TelaOrdemServico.os=os;
+			System.out.println(os.toString());
+			new TelaOrdemServico();
+			f.dispose();
+		}
+		
+	}
 }//tela lancamentos

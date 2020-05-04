@@ -12,7 +12,12 @@ public class Cliente implements Serializable {
 	private String telefone;
 	Random random = new Random();
 
-	public Cliente(){}
+	public Cliente(){
+		nome = "";
+		cpfCnpj = 0;
+		email = "";
+		telefone = "";
+	}
 
 	public Cliente(long cpfCnpj, String nome, String email, String telefone) {
 
