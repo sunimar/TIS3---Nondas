@@ -10,7 +10,7 @@ public class OrdemVenda implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Date data;
 	private long codVenda;
-	private List<Produto> produtos;
+	public List<Produto> produtos;
 	private float valorTotal;
 
 	public OrdemVenda() {

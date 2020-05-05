@@ -36,9 +36,9 @@ public class TelaLancamentos {
 
 	public TelaLancamentos() {
 		// create a new frame with text field and button 
-		f = new JFrame("Lancamentos"); 
+		f = new JFrame("Lançamentos"); 
 		// create a label to display text 
-		l = new JLabel("Selecione a opcao desejada:"); 
+		l = new JLabel("Selecione a opção desejada:"); 
 
 		// create a new buttons 
 		btOv = new JButton("Nova Ordem de Venda"); 
