@@ -16,6 +16,8 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import DAO.ServicoDAO;
+import DAO.VendasDAO;
 import Entidades.OrdemServico;
 import Entidades.OrdemVenda;
 import Entidades.Produto;
@@ -24,7 +26,7 @@ import DAO.ProdutoDAO;
 @SuppressWarnings("serial")
 public class TelaOrdemVenda extends JFrame{
 	//instanciar dao venda
-	public static OrdemVenda ov = null;
+	public static OrdemVenda ov;
 	Date date;
 	float preco = 0;
 	Produto prod;
@@ -38,6 +40,7 @@ public class TelaOrdemVenda extends JFrame{
 	DefaultListModel listModelEstoque, listModelCarrinho;
 	GridBagConstraints c = new GridBagConstraints();
 	GridLayout grid;
+	VendasDAO vendasDAO;
 
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -47,8 +50,8 @@ public class TelaOrdemVenda extends JFrame{
 			System.out.println("nova ov");
 			ov = new OrdemVenda();
 		}else {
-			System.out.println("alteração de ov");
-			//metodo que constroi o carrinho de acordo com o dao venda
+
+
 		}
 		
 		prodDAO = new ProdutoDAO("ProdutoDAO");
@@ -71,6 +74,19 @@ public class TelaOrdemVenda extends JFrame{
 
 		listModelCarrinho = new DefaultListModel();
 		carrinho = new JList<Produto>(listModelCarrinho);
+		//preencheCarrinho();
+
+		System.out.println("alteração de ov");
+
+		List<Produto> produtos = ov.getProdutos();
+
+		for(Produto i : produtos) {
+			System.out.println(i.toString());
+			listModelCarrinho.addElement(i);
+		}
+
+		carrinho.setModel(listModelCarrinho);
+
 
 
 
@@ -78,7 +94,11 @@ public class TelaOrdemVenda extends JFrame{
 		btSalvar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				salvarOv();
+				try {
+					salvarOv();
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
 			}
 		});
 		
@@ -119,10 +139,23 @@ public class TelaOrdemVenda extends JFrame{
 		setSize(700,500);
 		setVisible(true);
 	}//builder
-	
-	public void salvarOv() {
-		//long oldCod = ov.getCodVenda();
-		ov.setCodVenda(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(date)));
+
+	private void preencheCarrinho() {
+
+		List<Produto> produtos = ov.getProdutos();
+		listModelCarrinho = null;
+		for(Produto i : produtos) {
+			System.out.println(i.toString());
+		listModelCarrinho.addElement(i);
+		}
+
+		carrinho.setModel(listModelCarrinho);
+
+	}
+
+	public void salvarOv() throws IOException {
+		long oldCod = ov.getCodVenda();
+
 		
 		Produto [] carrinho = null;
 		
@@ -134,17 +167,24 @@ public class TelaOrdemVenda extends JFrame{
 		}
 		
 		ov.setValorTotal();
-		//dao venda//
-		/*
+
+		//dao Venda//
+		vendasDAO = new VendasDAO("VendasDAO");
+
 		if(oldCod == 0) {
-			//servicoDAO.add(os);
-			JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " salvo com sucesso!");
+			ov.setCodVenda(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(ov.getData())));
+			vendasDAO.add(ov);
+			JOptionPane.showMessageDialog(null, ov.getCodVenda() +" "+ " salvo com sucesso!");
+
 		}else {
-			JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " alterado com sucesso!");
-			//servicoDAO.update(os);
-		}*/
-		//
+			JOptionPane.showMessageDialog(null, ov.getCodVenda() +" "+ " alterado com sucesso!");
+
+			ov.setCodVenda(oldCod);
+			vendasDAO.update(ov);
+
+		}
 		System.out.println(ov.toString());
+		ov = null;
 		TelaLancamentos.f.setVisible(true);
 		dispose();
 	}//salvar
@@ -204,8 +244,6 @@ public class TelaOrdemVenda extends JFrame{
 		c.weighty = 0;
 
 		/* Fill Dados. */
-		date = new Date();
-
 		jlData = new JLabel();
 		jlData.setText(new SimpleDateFormat("EEE, dd 'de' MMM 'de' yyyy, HH:mm").format(ov.getData()));
 		jlCod = new JLabel("Numero: " + new SimpleDateFormat("yyyyMMddHHmmss").format(ov.getData()));

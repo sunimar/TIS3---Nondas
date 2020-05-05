@@ -183,8 +183,6 @@ public class TelaOrdemServico extends JFrame {
 	public void salvarOs() throws IOException {
 		long oldCod = os.getCodServ();
 
-		os.setCodServ(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(os.getData())));
-
 		if(tfMarca.getText().isEmpty() || tfModelo.getText().isEmpty() || tfSerie.getText().isEmpty()
 				|| Double.parseDouble(tfVal.getText().toString())==0 || taDef.getText().isEmpty() || cli==null) {
 			JOptionPane.showMessageDialog(null, " Preencha todos os campos corretamente! ");
@@ -218,11 +216,14 @@ public class TelaOrdemServico extends JFrame {
 		//dao OS//
 		servicoDAO = new ServicoDAO("ServicoDAO");
 		if(oldCod == 0) {
+			os.setCodServ(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(os.getData())));
 			servicoDAO.add(os);
 			JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " salvo com sucesso!");
 		}else {
-			JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " alterado com sucesso!");
+
+			os.setCodServ(oldCod);
 			servicoDAO.update(os);
+			JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " alterado com sucesso!");
 		}
 		os = null;
 		TelaLancamentos.f.setVisible(true);

@@ -17,7 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import DAO.ServicoDAO;
+import DAO.VendasDAO;
 import Entidades.OrdemServico;
+import Entidades.OrdemVenda;
 import Entidades.Produto;
 
 public class TelaLancamentos {
@@ -72,8 +74,11 @@ public class TelaLancamentos {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//f.setVisible(false);
-				//new TelaProduto();
+				try {
+					consultaOv();
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
 			}
 		});
 		
@@ -155,4 +160,37 @@ public class TelaLancamentos {
 		}
 		
 	}
+
+	public void consultaOv() throws IOException {
+		VendasDAO vendas = new VendasDAO("VendasDAO");
+
+		JPanel jpOrdens = new JPanel();
+		jpOrdens.setSize(new Dimension(200, 200));
+		JScrollPane scrollpane = new JScrollPane();
+
+
+		DefaultListModel listModelOrdens = new DefaultListModel();
+		JList jlOrdens = new JList<Produto>(listModelOrdens);
+
+		List<OrdemVenda> ordens = vendas.getAll();
+
+		for(OrdemVenda i : ordens) {
+			listModelOrdens.addElement(i);
+		}
+		scrollpane = new JScrollPane(jlOrdens);
+		jpOrdens.add(scrollpane);
+		scrollpane.getViewport().add(jlOrdens);
+
+		JOptionPane.showMessageDialog(null,scrollpane,"Ordens de Vendas",JOptionPane.INFORMATION_MESSAGE);
+		OrdemVenda ov = (OrdemVenda) jlOrdens.getSelectedValue();
+
+		if(ov != null) {
+			TelaOrdemVenda.ov=ov;
+			System.out.println(ov.toString());
+			new TelaOrdemVenda();
+			f.dispose();
+		}
+
+	}
+
 }//tela lancamentos
