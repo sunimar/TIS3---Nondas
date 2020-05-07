@@ -66,7 +66,12 @@ public class TelaLancamentos {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				f.setVisible(false);
-				new TelaOrdemServico();
+				try {
+					new TelaOrdemServico();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 

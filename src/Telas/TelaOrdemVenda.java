@@ -25,12 +25,13 @@ import DAO.ProdutoDAO;
 
 @SuppressWarnings("serial")
 public class TelaOrdemVenda extends JFrame{
-	//instanciar dao venda
+
 	public static OrdemVenda ov;
 	Date date;
 	float preco = 0;
 	Produto prod;
 	ProdutoDAO prodDAO;
+	VendasDAO vendasDAO;
 	JPanel ui, jpVenda, jpProd, jpEstoque;
 	JButton btVol, btSalvar, btDel, btAddProd, btRemProd;
 	JLabel jlData, jlCod, jlVal;
@@ -40,7 +41,6 @@ public class TelaOrdemVenda extends JFrame{
 	DefaultListModel listModelEstoque, listModelCarrinho;
 	GridBagConstraints c = new GridBagConstraints();
 	GridLayout grid;
-	VendasDAO vendasDAO;
 
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -55,7 +55,7 @@ public class TelaOrdemVenda extends JFrame{
 
 		prodDAO = new ProdutoDAO("ProdutoDAO");
 		vendasDAO = new VendasDAO("VendasDAO");
-		
+
 		ui = new JPanel(new BorderLayout(4,4));
 		ui.setBorder(new TitledBorder(""));
 		ui.setLayout(new GridLayout(0,2));
@@ -133,10 +133,11 @@ public class TelaOrdemVenda extends JFrame{
 		setSize(700,500);
 		setVisible(true);
 	}//builder
-	
+
 	public void delOv() {
 		vendasDAO.remove(ov);
 		JOptionPane.showMessageDialog(null, ov.getCodVenda() +" "+ " excluido com sucesso!");
+		System.out.println(ov.toString() + " excluido");
 		ov = null;
 		TelaLancamentos.f.setVisible(true);
 		dispose();
@@ -144,7 +145,7 @@ public class TelaOrdemVenda extends JFrame{
 
 	public void salvarOv() throws IOException {
 		long oldCod = ov.getCodVenda();
-
+		ov.produtos.clear();
 		Produto [] carrinho = null;
 
 		carrinho = Arrays.stream(listModelCarrinho.toArray()).map(Produto.class::cast).toArray(Produto[]::new);
@@ -160,13 +161,14 @@ public class TelaOrdemVenda extends JFrame{
 			ov.setCodVenda(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(ov.getData())));
 			vendasDAO.add(ov);
 			JOptionPane.showMessageDialog(null, ov.getCodVenda() +" "+ " salvo com sucesso!");
-
+			System.out.println(ov.toString() + " incluido");
 		}else {
 			JOptionPane.showMessageDialog(null, ov.getCodVenda() +" "+ " alterado com sucesso!");
+			System.out.println(ov.toString() + " alterado");
 			ov.setCodVenda(oldCod);
 			vendasDAO.update(ov);
 		}
-		System.out.println(ov.toString());
+
 		ov = null;
 		TelaLancamentos.f.setVisible(true);
 		dispose();
@@ -175,6 +177,11 @@ public class TelaOrdemVenda extends JFrame{
 	public void remProd() {
 
 		prod = (Produto) carrinho.getSelectedValue();
+
+		if(prod==null) {
+			JOptionPane.showMessageDialog(null, " Selecione ao menos um produto para remover! ");
+			return;
+		}
 
 		preco = preco - prod.getPrecoVenda();
 

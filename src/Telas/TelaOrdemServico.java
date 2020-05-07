@@ -36,7 +36,7 @@ public class TelaOrdemServico extends JFrame {
 	JTextArea taDef;
 	JButton btVol, btSalvar, btDel, btCli;
 
-	public TelaOrdemServico() {
+	public TelaOrdemServico() throws IOException {
 		super("Ordem de Servico");
 		/***********panels iniciais*****************************/
 		if(os==null) {
@@ -45,6 +45,8 @@ public class TelaOrdemServico extends JFrame {
 		}else {
 			System.out.println("alteração de os");
 		}
+		servicoDAO = new ServicoDAO("ServicoDAO");
+
 		ui = new JPanel(new BorderLayout(4,4));
 		ui.setBorder(new TitledBorder("Ordem de Serviço"));
 		ui.setLayout(new GridLayout(0,3));
@@ -172,9 +174,9 @@ public class TelaOrdemServico extends JFrame {
 	}//builder
 
 	public void deletarOs()throws IOException {
-		servicoDAO = new ServicoDAO("ServicoDAO");
 		servicoDAO.remove(os);
 		JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " excluido com sucesso!");
+		System.out.println(os.toString() + " excluido");
 		os = null;
 		TelaLancamentos.f.setVisible(true);
 		dispose();
@@ -183,9 +185,8 @@ public class TelaOrdemServico extends JFrame {
 	public void salvarOs() throws IOException {
 		long oldCod = os.getCodServ();
 
-		if(tfMarca.getText().isEmpty() || tfModelo.getText().isEmpty() || tfSerie.getText().isEmpty()
-				|| Double.parseDouble(tfVal.getText().toString())==0 || taDef.getText().isEmpty() || cli==null) {
-			JOptionPane.showMessageDialog(null, " Preencha todos os campos corretamente! ");
+		if(tfMarca.getText().isEmpty() || tfModelo.getText().isEmpty() || Double.parseDouble(tfVal.getText().toString())==0 || cli==null) {
+			JOptionPane.showMessageDialog(null, " Preencha os campos corretamente! ");
 			return;
 		}
 
@@ -214,16 +215,18 @@ public class TelaOrdemServico extends JFrame {
 		os.setValorTotal(Double.parseDouble(tfVal.getText()));
 
 		//dao OS//
-		servicoDAO = new ServicoDAO("ServicoDAO");
+
 		if(oldCod == 0) {
 			os.setCodServ(Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(os.getData())));
 			servicoDAO.add(os);
 			JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " salvo com sucesso!");
+			System.out.println(os.toString() + " incluido");
 		}else {
 
 			os.setCodServ(oldCod);
 			servicoDAO.update(os);
 			JOptionPane.showMessageDialog(null, os.getCodServ() +" "+ " alterado com sucesso!");
+			System.out.println(os.toString() + " alterado");
 		}
 		os = null;
 		TelaLancamentos.f.setVisible(true);

@@ -1,6 +1,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -123,7 +124,9 @@ public class OrdemServico implements Serializable{
 	}
 
 	public String toString() {
-		return "Data: " + this.data.toString() + " " +this.codServ  + " " + this.cliente.getNome();
+		
+		String tmp = new SimpleDateFormat("EEE, dd 'de' MMM 'de' yyyy, HH:mm").format(this.data);
+		return tmp + " " +this.codServ  + " " + this.cliente.getNome();
 	}
 
 }

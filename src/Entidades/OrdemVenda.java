@@ -1,6 +1,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +58,8 @@ public class OrdemVenda implements Serializable {
 	}
 
 	public String toString() {
-		return "Data: " + " " + this.data.toString() + " " + this.codVenda + " " +  this.valorTotal;
+		String tmp = new SimpleDateFormat("EEE, dd 'de' MMM 'de' yyyy, HH:mm").format(this.data);
+		return tmp + " " + this.codVenda + " " +  this.valorTotal;
 	}
 
 }
