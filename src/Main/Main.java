@@ -2,12 +2,14 @@ package Main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.*; 
+import java.awt.event.*;
+import java.io.IOException;
 import java.awt.*; 
 import javax.swing.*;
 import javax.swing.JOptionPane;
 import Telas.TelaCadastros;
 import Telas.TelaLancamentos;
+import Telas.TelaRelatorios;
 
 public class Main{
 
@@ -65,6 +67,19 @@ class TelaPrincipal extends JFrame{
 				new TelaLancamentos();
 			}
 		});
+		
+		btRel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new TelaRelatorios();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		btSai.addActionListener(new ActionListener() {
 
@@ -97,7 +112,7 @@ class TelaPrincipal extends JFrame{
 
 		f.show();
 
-	}
+	}//builder
 }//home screen
 
 
