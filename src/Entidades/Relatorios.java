@@ -17,35 +17,42 @@ public class Relatorios {
         vendasDAO = new VendasDAO("VendasDAO");
     }
 
-    void vendasPorData(Date data) throws IOException {
+    List<OrdemVenda> vendasPorData(Date data) throws IOException {
 
         //Esse linha irá se tornar um array só com a informação solicitada no parâmetro data, usei o ForEach só de exemplo para testar.
-        vendasDAO.getAll().stream().filter(a -> a.getData() == data).collect(Collectors.toList()).forEach(retorno -> {
-            System.out.println(retorno.getData());
-        });
-    }
+         List<OrdemVenda> collect = vendasDAO.getAll().stream().filter(a -> a.getData() == data).collect(Collectors.toList());
 
-    void vendasPorProduto(long id) throws IOException{
-
-        vendasDAO.getAll().stream().filter(a -> a.getProdutos().iterator().equals(id)).collect(Collectors.toList());
+         return collect;
 
     }
 
-    void servicosPorData (Date data) throws IOException{
+    List<OrdemVenda> vendasPorProduto(long id) throws IOException{
+
+         List<OrdemVenda> collect = vendasDAO.getAll().stream().filter(a -> a.getProdutos().iterator().equals(id)).collect(Collectors.toList());
+
+        return collect;
+
+    }
+
+    List<OrdemServico> servicosPorData (Date data) throws IOException{
 
         //Esse linha irá se tornar um array só com a informação solicitada no parâmetro data, depois do método Collectors.toList() pode-se colocar o for each para iterar a tabela
-        servicosDAO.getAll().stream().filter(a -> a.getData() == data).collect(Collectors.toList());
+         List<OrdemServico> collect = servicosDAO.getAll().stream().filter(a -> a.getData() == data).collect(Collectors.toList());
+
+      return collect;
     }
 
-    void servicosPorCliente (long cpfCnpj) throws IOException {
+    List<OrdemServico> servicosPorCliente (long cpfCnpj) throws IOException {
 
-        servicosDAO.getAll().stream().filter(a -> a.getCliente().getCpfCnpj() == cpfCnpj).collect(Collectors.toList());
-
+        List<OrdemServico> collect = servicosDAO.getAll().stream().filter(a -> a.getCliente().getCpfCnpj() == cpfCnpj).collect(Collectors.toList());
+        return collect;
     }
 
-    void servicoPorTipo (String tipoServico) throws IOException {
+    List<OrdemServico> servicoPorTipo (String tipoServico) throws IOException {
 
-        servicosDAO.getAll().stream().filter(a -> a.getServicos().iterator().equals(tipoServico)).collect(Collectors.toList());
+        List<OrdemServico> collect = servicosDAO.getAll().stream().filter(a -> a.getServicos().iterator().equals(tipoServico)).collect(Collectors.toList());
+
+        return collect;
     }
 
 }
