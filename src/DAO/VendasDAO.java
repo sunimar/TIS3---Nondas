@@ -59,7 +59,6 @@ public class VendasDAO implements DAO<OrdemVenda, String> {
 		}
 
 		if (index != -1) {
-			System.out.println("Foi salvo");
 			ordemVenda.set(index, ov);
 			saveToFile();
 		}
