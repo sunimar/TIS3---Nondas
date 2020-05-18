@@ -15,7 +15,7 @@ public class Relatorios {
 
 	public Relatorios() throws IOException {
 		vendasDAO = new VendasDAO("VendasDAO");
-		servicosDAO = new ServicoDAO("ServicosDAO");
+		servicosDAO = new ServicoDAO("ServicoDAO");
 	}
 
 	public List<OrdemVenda> vendasPorData(String data) throws IOException {
@@ -32,10 +32,8 @@ public class Relatorios {
 	}
 
 	public List<OrdemServico> servicosPorData (String data) throws IOException{
-		System.out.println("cheguei");
 		List<OrdemServico> servs = null;
 		servs = servicosDAO.getAll().stream().filter(a -> new SimpleDateFormat("MMyyyy").format(a.getData()).equals(data)).collect(Collectors.toList());
-		for(OrdemServico i : servs) { System.out.println(i.toString());}
 		return servs;
 	}
 
