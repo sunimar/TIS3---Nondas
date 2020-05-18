@@ -92,7 +92,7 @@ public class OrdemServico implements Serializable{
 	}
 
 	public double getValorTotal() {
-		return valorTotal;
+		return this.valorTotal;
 	}
 
 	public void setValorTotal(double valorTotal) {

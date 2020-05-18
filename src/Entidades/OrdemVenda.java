@@ -30,7 +30,18 @@ public class OrdemVenda implements Serializable {
 	}
 
 	public List<Produto> getProdutos() {
-		return produtos;
+		return this.produtos;
+	}
+	
+	public boolean produtoExiste(long id) {
+		
+		for(Produto i : this.produtos) {
+			if(i.getIdProduto() == id) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	public void setProduto(Produto prod) {
