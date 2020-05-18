@@ -113,6 +113,20 @@ public class TelaRelatorios {
 			}
 		});
 
+		btServ02.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					servPorCliente();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//f.setVisible(false);
+			}
+		});
+
+
 
 		btVol.addActionListener(new ActionListener() {
 
@@ -182,6 +196,65 @@ public class TelaRelatorios {
 			JOptionPane.showMessageDialog(null, panel, "Serviços no período de " + data, JOptionPane.PLAIN_MESSAGE);
 		}
 	}//serviços01
+
+	public void servPorCliente()throws Exception{
+		long cpfCnpj = 0;
+		double tmp = 0;
+		String temp = "";
+
+		while (cpfCnpj == 0) {
+			temp = JOptionPane.showInputDialog("Informe o CpfCnpj:");
+			cpfCnpj = Long.parseLong(temp);
+		}
+		List<OrdemServico> servs = ret.servicosPorCliente(cpfCnpj);
+		/************************************************************/
+		JPanel panel = new JPanel();
+		panel.setSize(new Dimension(400, 400));
+		JTextArea taText = new JTextArea();
+		taText.setEditable(false);
+		JScrollPane spScroll = new JScrollPane(taText);
+		spScroll.setMaximumSize(new Dimension(400, 400));
+		spScroll.setPreferredSize(new Dimension(400, 400));
+		/***************************************************************/
+		taText.setText("");
+
+		for (OrdemServico i : servs) {
+			System.out.println(i.getValorTotal());
+			tmp += i.getValorTotal();
+			taText.append(i + "\n");
+		}//for
+
+		if(tmp==0) {
+			JOptionPane.showMessageDialog(null, "Não há Serviços nesse período!");
+			f.dispose();
+		}else {
+			taText.append("Total de faturamento de Serviços: " + tmp);
+			panel.add(spScroll);
+			UIManager.put("OptionPane.minimumSize",new Dimension(400, 400));
+			JOptionPane.showMessageDialog(null, panel, "Serviços do CpfCnpj: " + cpfCnpj, JOptionPane.PLAIN_MESSAGE);
+		}
+	}//serviços02 Serviço por Cliente.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void vendas02() throws IOException {
