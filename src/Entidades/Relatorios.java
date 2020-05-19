@@ -37,9 +37,10 @@ public class Relatorios {
 		return servs;
 	}
 
-	public List<OrdemServico> servicosPorCliente (long cpfCnpj) throws IOException{
+	public List<OrdemServico> servicosPorCliente (String data, long cpfCnpj) throws IOException{
 		List<OrdemServico> servs = null;
-		servs = servicosDAO.getAll().stream().filter(a -> a.getCliente().getCpfCnpj() == cpfCnpj).collect(Collectors.toList());
+		servs = servicosDAO.getAll().stream().filter(a -> a.getCliente().getCpfCnpj() == cpfCnpj
+				&& new SimpleDateFormat("MMyyyy").format(a.getData()).equals(data)).collect(Collectors.toList());
 		return servs;
 	}
 

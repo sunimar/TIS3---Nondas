@@ -61,6 +61,8 @@ public class TelaRelatorios {
 		os = new OrdemServico();
 		servDAO = new ServicoDAO("ServicoDAO");
 		prodDAO = new ProdutoDAO("ProdutoDAO");
+		cliDAO = new CadastroClienteDAO("ClienteDAO");
+		cli = new Cliente();
 		ret = new Relatorios();
 		// create a new frame with text field and button 
 		f = new JFrame("Relatórios"); 
@@ -198,15 +200,29 @@ public class TelaRelatorios {
 	}//serviços01
 
 	public void servPorCliente()throws Exception{
-		long cpfCnpj = 0;
-		double tmp = 0;
-		String temp = "";
-
-		while (cpfCnpj == 0) {
-			temp = JOptionPane.showInputDialog("Informe o CpfCnpj:");
-			cpfCnpj = Long.parseLong(temp);
+		String data = "";
+		float tmp = 0;
+		//------------------seleciono a competencia---------------------------------------------------------------------------
+		while (data.equals("")) {
+			data = JOptionPane.showInputDialog("Informe a data: mmaaaa");
 		}
-		List<OrdemServico> servs = ret.servicosPorCliente(cpfCnpj);
+		//----------------seleciono o cliente--------------------------------------------------------------------------
+		JPanel jpEstoque = new JPanel();
+
+		DefaultListModel listModelEstoque = new DefaultListModel();
+		JList estoque = new JList<Produto>(listModelEstoque);
+
+		List<Cliente> clis = cliDAO.getAll();
+
+		for(Cliente i : clis) {
+			listModelEstoque.addElement(i);
+		}
+		jpEstoque.add(estoque);
+		JOptionPane.showMessageDialog(null, "Selecione um cliente:");
+		JOptionPane.showMessageDialog(null,jpEstoque,"Lista de Clientes",JOptionPane.INFORMATION_MESSAGE);
+		cli = (Cliente) estoque.getSelectedValue();
+		System.out.println(cli.getNome() + cli.getCpfCnpj());
+		List<OrdemServico> servs = ret.servicosPorCliente(data, cli.getCpfCnpj());
 		/************************************************************/
 		JPanel panel = new JPanel();
 		panel.setSize(new Dimension(400, 400));
@@ -219,7 +235,6 @@ public class TelaRelatorios {
 		taText.setText("");
 
 		for (OrdemServico i : servs) {
-			System.out.println(i.getValorTotal());
 			tmp += i.getValorTotal();
 			taText.append(i + "\n");
 		}//for
@@ -231,30 +246,9 @@ public class TelaRelatorios {
 			taText.append("Total de faturamento de Serviços: " + tmp);
 			panel.add(spScroll);
 			UIManager.put("OptionPane.minimumSize",new Dimension(400, 400));
-			JOptionPane.showMessageDialog(null, panel, "Serviços do CpfCnpj: " + cpfCnpj, JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, panel, "Serviços do CpfCnpj: " + cli.getCpfCnpj(), JOptionPane.PLAIN_MESSAGE);
 		}
 	}//serviços02 Serviço por Cliente.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void vendas02() throws IOException {
@@ -292,7 +286,7 @@ public class TelaRelatorios {
 		spScroll.setPreferredSize(new Dimension(400, 400));
 		/***************************************************************/
 		taText.setText("");
-		
+
 		for (OrdemVenda i : vendas) {
 			tmp += prod.getPrecoVenda();
 			taText.append(i + "\n");
@@ -312,7 +306,7 @@ public class TelaRelatorios {
 	public void vendas01()throws Exception{
 		String data = "";
 		float tmp = 0;
-		
+
 
 		while (data.equals("")) {
 			data = JOptionPane.showInputDialog("Informe a data: mmaaaa");
@@ -329,7 +323,7 @@ public class TelaRelatorios {
 		spScroll.setPreferredSize(new Dimension(400, 400));
 		/***************************************************************/
 		taText.setText("");
-		
+
 		for (OrdemVenda i : vendas) {
 			tmp += i.getValorTotal();
 			taText.append(i + "\n");

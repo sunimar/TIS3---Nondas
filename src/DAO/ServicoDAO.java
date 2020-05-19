@@ -36,7 +36,6 @@ public class ServicoDAO implements DAO<OrdemServico, String> {
 	public OrdemServico get(String chave) {
 		for (OrdemServico serv : ordemServicos) {
 			if (Long.parseLong(chave) == serv.getCodServ()) {
-				System.out.println(serv.getCodServ());
 				return serv;
 			}
 		}
@@ -45,7 +44,6 @@ public class ServicoDAO implements DAO<OrdemServico, String> {
 
 	@Override
 	public List<OrdemServico> getAll() {
-
 		return ordemServicos;
 	}
 
