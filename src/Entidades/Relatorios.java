@@ -44,4 +44,12 @@ public class Relatorios {
 		return servs;
 	}
 
+	public List<OrdemServico> servicosPorTipo (String data, String servico) throws IOException{
+		List<Entidades.OrdemServico> servs = null;
+		servs = servicosDAO.getAll().stream().filter(a -> a.servicoExiste(servico) == true
+				&& new SimpleDateFormat("MMyyyy").format(a.getData()).equals(data)).collect(Collectors.toList());
+		return servs;
+	}
+
+
 }//class
