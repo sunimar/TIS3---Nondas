@@ -35,6 +35,16 @@ public class OrdemServico implements Serializable{
 		obs = "";
 	}
 
+	public boolean servicoExiste(String id) {
+
+		for(String i : this.servicos) {
+			if(i.equals(id)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public Date getData() {
 		return data;
 	}
