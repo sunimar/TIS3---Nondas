@@ -1,5 +1,7 @@
 package Telas;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -169,6 +171,8 @@ public class TelaRelatorios {
 		while (data.equals("")) {
 			data = JOptionPane.showInputDialog("Informe a data: mmaaaa");
 		}
+		File file = new File("Faturamento de serviços no mês " + data + ".csv");
+		FileWriter writer = new FileWriter(file);
 
 		List<OrdemServico> servs = ret.servicosPorData(data);
 		/************************************************************/
@@ -186,7 +190,10 @@ public class TelaRelatorios {
 			System.out.println(i.getValorTotal());
 			tmp += i.getValorTotal();
 			taText.append(i + "\n");
+			writer.write(i + "\n");
+			writer.write("\n");
 		}//for
+		writer.close();
 
 		if(tmp==0) {
 			JOptionPane.showMessageDialog(null, "Não há Serviços nesse período!");
@@ -223,6 +230,8 @@ public class TelaRelatorios {
 		cli = (Cliente) estoque.getSelectedValue();
 		System.out.println(cli.getNome() + cli.getCpfCnpj());
 		List<OrdemServico> servs = ret.servicosPorCliente(data, cli.getCpfCnpj());
+		File file = new File("Faturamento de serviços no mês " + data + cli.getNome() + ".csv");
+		FileWriter writer = new FileWriter(file);
 		/************************************************************/
 		JPanel panel = new JPanel();
 		panel.setSize(new Dimension(400, 400));
@@ -237,7 +246,10 @@ public class TelaRelatorios {
 		for (OrdemServico i : servs) {
 			tmp += i.getValorTotal();
 			taText.append(i + "\n");
+			writer.write(i + "\n");
+			writer.write("\n");
 		}//for
+		writer.close();
 
 		if(tmp==0) {
 			JOptionPane.showMessageDialog(null, "Não há Serviços nesse período!");
@@ -274,6 +286,8 @@ public class TelaRelatorios {
 		JOptionPane.showMessageDialog(null,jpEstoque,"Estoque de Produtos",JOptionPane.INFORMATION_MESSAGE);
 		prod = (Produto) estoque.getSelectedValue();
 		System.out.println(prod.getNome());
+		File file = new File("Faturamento de vendas no mês " + data + prod.getNome() + ".csv");
+		FileWriter writer = new FileWriter(file);
 		//--------------------------------mostrar o relatorio----------------------------------------------------------------
 		List<OrdemVenda> vendas = ret.vendasPorProduto(data, prod.getIdProduto());
 		/************************************************************/
@@ -290,6 +304,8 @@ public class TelaRelatorios {
 		for (OrdemVenda i : vendas) {
 			tmp += prod.getPrecoVenda();
 			taText.append(i + "\n");
+			writer.write(i + "\n");
+			writer.write("\n");
 		}//for
 
 		if(tmp==0) {
@@ -297,6 +313,7 @@ public class TelaRelatorios {
 			f.dispose();
 		}else {
 			taText.append(prod.getNome()+ " faturou " + tmp + " no periodo de " + data);
+			writer.close();
 			panel.add(spScroll);
 			UIManager.put("OptionPane.minimumSize",new Dimension(400, 400));
 			JOptionPane.showMessageDialog(null, panel, "Vendas no período de " + data, JOptionPane.PLAIN_MESSAGE);
@@ -307,10 +324,11 @@ public class TelaRelatorios {
 		String data = "";
 		float tmp = 0;
 
-
 		while (data.equals("")) {
 			data = JOptionPane.showInputDialog("Informe a data: mmaaaa");
 		}
+		File file = new File("Faturamento de vendas no mês" + data + ".csv");
+		FileWriter writer = new FileWriter(file);
 		List<OrdemVenda> vendas = ret.vendasPorData(data);
 		/************************************************************/
 		JPanel panel = new JPanel();
@@ -327,6 +345,8 @@ public class TelaRelatorios {
 		for (OrdemVenda i : vendas) {
 			tmp += i.getValorTotal();
 			taText.append(i + "\n");
+			writer.write(i + "\n");
+			writer.write("\n");
 		}//for
 
 		if(tmp==0) {
@@ -334,6 +354,7 @@ public class TelaRelatorios {
 			f.dispose();
 		}else {
 			taText.append("Total de faturamento de vendas: " + tmp);
+			writer.close();
 			panel.add(spScroll);
 			UIManager.put("OptionPane.minimumSize",new Dimension(400, 400));
 			JOptionPane.showMessageDialog(null, panel, "Vendas no período de " + data, JOptionPane.PLAIN_MESSAGE);

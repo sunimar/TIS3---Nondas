@@ -70,7 +70,7 @@ public class OrdemVenda implements Serializable {
 
 	public String toString() {
 		String tmp = new SimpleDateFormat("EEE, dd 'de' MMM 'de' yyyy, HH:mm").format(this.data);
-		return tmp + " " + this.codVenda + " " +  this.valorTotal;
+		return tmp + ";" + "'" + this.codVenda + ";" +  this.valorTotal;
 	}
 
 }

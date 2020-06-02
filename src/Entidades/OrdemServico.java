@@ -126,7 +126,7 @@ public class OrdemServico implements Serializable{
 	public String toString() {
 		
 		String tmp = new SimpleDateFormat("EEE, dd 'de' MMM 'de' yyyy, HH:mm").format(this.data);
-		return tmp + " " +this.codServ  + " " + this.cliente.getNome();
+		return tmp + ";" + "'" + this.codServ  + ";" + this.cliente.getNome();
 	}
 
 }
